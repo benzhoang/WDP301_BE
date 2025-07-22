@@ -65,166 +65,29 @@
     },
     {
       "name": "Bookings"
+    },
+    {
+      "name": "Dashboard"
+    },
+    {
+      "name": "Staff"
+    },
+    {
+      "name": "Member"
+    },
+    {
+      "name": "GoogleAuth"
+    },
+    {
+      "name": "Auth"
     }
   ],
   "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    },
     "schemas": {
-      "User": {
+      "DefaultResponse": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "Enroll": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Survey": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "SurveyResponse": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Blog": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Content": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Program": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "BookingSession": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Slot": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Flag": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "ConsultantSlot": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Consultant": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "ConsoleLog": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Assessment": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Action": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Profile": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          }
-        }
-      },
-      "Booking": {
-        "type": "object",
-        "properties": {
-          "_id": {
+          "message": {
             "type": "string"
           }
         }
@@ -236,1386 +99,763 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get all users",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/User" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Users"],
         "summary": "Create user",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/users/{id}": {
       "get": {
         "tags": ["Users"],
         "summary": "Get user by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Users"],
         "summary": "Update user",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Users"],
         "summary": "Delete user",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/categories": {
       "get": {
         "tags": ["Categories"],
         "summary": "Get all categories",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Category" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Categories"],
         "summary": "Create category",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/categories/{id}": {
       "get": {
         "tags": ["Categories"],
         "summary": "Get category by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Categories"],
         "summary": "Update category",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Category" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Categories"],
         "summary": "Delete category",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/enrolls": {
       "get": {
         "tags": ["Enrolls"],
         "summary": "Get all enrolls",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Enroll" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Enrolls"],
         "summary": "Create enroll",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Enroll" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/enrolls/{id}": {
       "get": {
         "tags": ["Enrolls"],
         "summary": "Get enroll by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Enroll" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Enrolls"],
         "summary": "Update enroll",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Enroll" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Enrolls"],
         "summary": "Delete enroll",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/surveys": {
       "get": {
         "tags": ["Surveys"],
         "summary": "Get all surveys",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Survey" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Surveys"],
         "summary": "Create survey",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Survey" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/surveys/{id}": {
       "get": {
         "tags": ["Surveys"],
         "summary": "Get survey by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Survey" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Surveys"],
         "summary": "Update survey",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Survey" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Surveys"],
         "summary": "Delete survey",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/survey-responses": {
       "get": {
         "tags": ["SurveyResponses"],
         "summary": "Get all survey responses",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/SurveyResponse" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["SurveyResponses"],
         "summary": "Create survey response",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/survey-responses/{id}": {
       "get": {
         "tags": ["SurveyResponses"],
         "summary": "Get survey response by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["SurveyResponses"],
         "summary": "Update survey response",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["SurveyResponses"],
         "summary": "Delete survey response",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/blogs": {
       "get": {
         "tags": ["Blogs"],
         "summary": "Get all blogs",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Blog" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Blogs"],
         "summary": "Create blog",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Blog" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/blogs/{id}": {
       "get": {
         "tags": ["Blogs"],
         "summary": "Get blog by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Blog" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Blogs"],
         "summary": "Update blog",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Blog" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Blogs"],
         "summary": "Delete blog",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/contents": {
       "get": {
         "tags": ["Contents"],
         "summary": "Get all contents",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Content" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Contents"],
         "summary": "Create content",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Content" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/contents/{id}": {
       "get": {
         "tags": ["Contents"],
         "summary": "Get content by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Content" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Contents"],
         "summary": "Update content",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Content" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Contents"],
         "summary": "Delete content",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/programs": {
       "get": {
         "tags": ["Programs"],
         "summary": "Get all programs",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Program" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Programs"],
         "summary": "Create program",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Program" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/programs/{id}": {
       "get": {
         "tags": ["Programs"],
         "summary": "Get program by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Program" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Programs"],
         "summary": "Update program",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Program" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Programs"],
         "summary": "Delete program",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/booking-sessions": {
       "get": {
         "tags": ["BookingSessions"],
         "summary": "Get all booking sessions",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/BookingSession" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["BookingSessions"],
         "summary": "Create booking session",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/BookingSession" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/booking-sessions/{id}": {
       "get": {
         "tags": ["BookingSessions"],
         "summary": "Get booking session by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/BookingSession" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["BookingSessions"],
         "summary": "Update booking session",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/BookingSession" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["BookingSessions"],
         "summary": "Delete booking session",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/slots": {
       "get": {
         "tags": ["Slots"],
         "summary": "Get all slots",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Slot" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Slots"],
         "summary": "Create slot",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Slot" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/slots/{id}": {
       "get": {
         "tags": ["Slots"],
         "summary": "Get slot by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Slot" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Slots"],
         "summary": "Update slot",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Slot" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Slots"],
         "summary": "Delete slot",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/flags": {
       "get": {
         "tags": ["Flags"],
         "summary": "Get all flags",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Flag" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Flags"],
         "summary": "Create flag",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Flag" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/flags/{id}": {
       "get": {
         "tags": ["Flags"],
         "summary": "Get flag by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Flag" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Flags"],
         "summary": "Update flag",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Flag" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Flags"],
         "summary": "Delete flag",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/consultant-slots": {
       "get": {
         "tags": ["ConsultantSlots"],
         "summary": "Get all consultant slots",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ConsultantSlot" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["ConsultantSlots"],
         "summary": "Create consultant slot",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/consultant-slots/{id}": {
       "get": {
         "tags": ["ConsultantSlots"],
         "summary": "Get consultant slot by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["ConsultantSlots"],
         "summary": "Update consultant slot",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["ConsultantSlots"],
         "summary": "Delete consultant slot",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/consultants": {
       "get": {
         "tags": ["Consultants"],
         "summary": "Get all consultants",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Consultant" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Consultants"],
         "summary": "Create consultant",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Consultant" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/consultants/{id}": {
       "get": {
         "tags": ["Consultants"],
         "summary": "Get consultant by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Consultant" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Consultants"],
         "summary": "Update consultant",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Consultant" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Consultants"],
         "summary": "Delete consultant",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/console-logs": {
       "get": {
         "tags": ["ConsoleLogs"],
         "summary": "Get all console logs",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ConsoleLog" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["ConsoleLogs"],
         "summary": "Create console log",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/console-logs/{id}": {
       "get": {
         "tags": ["ConsoleLogs"],
         "summary": "Get console log by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["ConsoleLogs"],
         "summary": "Update console log",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["ConsoleLogs"],
         "summary": "Delete console log",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/assessments": {
       "get": {
         "tags": ["Assessments"],
         "summary": "Get all assessments",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Assessment" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Assessments"],
         "summary": "Create assessment",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Assessment" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/assessments/{id}": {
       "get": {
         "tags": ["Assessments"],
         "summary": "Get assessment by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Assessment" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Assessments"],
         "summary": "Update assessment",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Assessment" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Assessments"],
         "summary": "Delete assessment",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/actions": {
       "get": {
         "tags": ["Actions"],
         "summary": "Get all actions",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Action" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Actions"],
         "summary": "Create action",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Action" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/actions/{id}": {
       "get": {
         "tags": ["Actions"],
         "summary": "Get action by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Action" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Actions"],
         "summary": "Update action",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Action" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Actions"],
         "summary": "Delete action",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/profiles": {
       "get": {
         "tags": ["Profiles"],
         "summary": "Get all profiles",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Profile" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Profiles"],
         "summary": "Create profile",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Profile" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/profiles/{id}": {
       "get": {
         "tags": ["Profiles"],
         "summary": "Get profile by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Profile" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Profiles"],
         "summary": "Update profile",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Profile" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Profiles"],
         "summary": "Delete profile",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/bookings": {
       "get": {
         "tags": ["Bookings"],
         "summary": "Get all bookings",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/Booking" }
-                }
-              }
-            }
-          }
-        }
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "post": {
         "tags": ["Bookings"],
         "summary": "Create booking",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Booking" }
-              }
-            }
-          }
-        }
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     },
     "/api/bookings/{id}": {
       "get": {
         "tags": ["Bookings"],
         "summary": "Get booking by id",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Booking" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "put": {
         "tags": ["Bookings"],
         "summary": "Update booking",
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Booking" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       },
       "delete": {
         "tags": ["Bookings"],
         "summary": "Delete booking",
-        "responses": {
-          "200": {
-            "description": "Deleted",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object" }
-              }
-            }
-          }
-        }
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/stats": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy thống kê dashboard",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/detailed": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy dashboard chi tiết",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/monthly-enrollment": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy thống kê đăng ký hàng tháng",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/monthly-members": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy thống kê thành viên mới hàng tháng",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/active-members": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy thống kê thành viên hoạt động",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/monthly-bookings": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy thống kê booking hàng tháng",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/dashboard/consultant": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Lấy dashboard cho consultant",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/staff": {
+      "get": {
+        "tags": ["Staff"],
+        "summary": "Lấy tất cả staff",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      },
+      "post": {
+        "tags": ["Staff"],
+        "summary": "Tạo staff",
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/staff/stats": {
+      "get": {
+        "tags": ["Staff"],
+        "summary": "Lấy thống kê staff",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/staff/search/{staffName}": {
+      "get": {
+        "tags": ["Staff"],
+        "summary": "Tìm staff theo tên",
+        "parameters": [{"name": "staffName", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/staff/{staffId}": {
+      "put": {
+        "tags": ["Staff"],
+        "summary": "Cập nhật staff",
+        "parameters": [{"name": "staffId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      },
+      "delete": {
+        "tags": ["Staff"],
+        "summary": "Xóa staff",
+        "parameters": [{"name": "staffId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/members": {
+      "get": {
+        "tags": ["Member"],
+        "summary": "Lấy tất cả member",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      },
+      "post": {
+        "tags": ["Member"],
+        "summary": "Tạo member",
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/members/stats": {
+      "get": {
+        "tags": ["Member"],
+        "summary": "Lấy thống kê member",
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/members/search/{memberName}": {
+      "get": {
+        "tags": ["Member"],
+        "summary": "Tìm member theo tên",
+        "parameters": [{"name": "memberName", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/members/{memberId}/full": {
+      "get": {
+        "tags": ["Member"],
+        "summary": "Lấy thông tin đầy đủ member",
+        "parameters": [{"name": "memberId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/members/{memberId}": {
+      "get": {
+        "tags": ["Member"],
+        "summary": "Lấy member theo id",
+        "parameters": [{"name": "memberId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      },
+      "put": {
+        "tags": ["Member"],
+        "summary": "Cập nhật member",
+        "parameters": [{"name": "memberId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      },
+      "delete": {
+        "tags": ["Member"],
+        "summary": "Xóa member",
+        "parameters": [{"name": "memberId", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/google/login": {
+      "post": {
+        "tags": ["GoogleAuth"],
+        "summary": "Đăng nhập bằng Google",
+        "responses": {"200": {"description": "Đăng nhập thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/google/register": {
+      "post": {
+        "tags": ["GoogleAuth"],
+        "summary": "Đăng ký bằng Google",
+        "responses": {"201": {"description": "Đăng ký thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đăng nhập",
+        "responses": {"200": {"description": "Đăng nhập thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đăng ký",
+        "responses": {"201": {"description": "Đăng ký thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/auth/google-login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đăng nhập bằng Google",
+        "responses": {"200": {"description": "Đăng nhập thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
+      }
+    },
+    "/api/auth/google-register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đăng ký bằng Google",
+        "responses": {"201": {"description": "Đăng ký thành công", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DefaultResponse"}}}}}
       }
     }
   }
