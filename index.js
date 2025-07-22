@@ -5,12 +5,7 @@ const connectDB = require('./configs/db');
 const userRoutes = require('./routes/userRoute');
 const profileRoutes = require('./routes/profileRoute');
 const bookingRoutes = require('./routes/bookingRoute');
-const productRoutes = require('./routes/productRoute');
 const categoryRoutes = require('./routes/categoryRoute');
-const reviewRoutes = require('./routes/reviewRoute');
-const orderRoutes = require('./routes/orderRoute');
-const cartRoutes = require('./routes/cartRoute');
-const paymentRoutes = require('./routes/paymentRoute');
 const actionRoutes = require('./routes/actionRoute');
 const assessmentRoutes = require('./routes/assessmentRoute');
 const blogRoutes = require('./routes/blogRoute');
@@ -25,25 +20,26 @@ const programRoutes = require('./routes/programRoute');
 const slotRoutes = require('./routes/slotRoute');
 const surveyRoutes = require('./routes/surveyRoute');
 const surveyResponseRoutes = require('./routes/surveyResponseRoute');
+const dashboardRoute = require('./routes/dashboardRoute');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const authRoutes = require('./routes/authRoute');
+const googleRoute = require('./routes/googleRoute');
+const memberRoute = require('./routes/memberRoute');
+const staffRoute = require('./routes/staffRoute');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.disable('etag');
 // Mount user routes
 app.use('/api/users', userRoutes);
-app.use('/api/profiles', profileRoutes);
+app.use('/api/profile', profileRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/booking-sessions', bookingSessionRoutes);
-app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/carts', cartRoutes);
-app.use('/api/payments', paymentRoutes);
 app.use('/api/actions', actionRoutes);
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/blogs', blogRoutes);
@@ -57,6 +53,11 @@ app.use('/api/programs', programRoutes);
 app.use('/api/slots', slotRoutes);
 app.use('/api/surveys', surveyRoutes);
 app.use('/api/survey-responses', surveyResponseRoutes);
+app.use('/api/dashboard', dashboardRoute);
+app.use('/api', authRoutes);
+app.use('/api/google', googleRoute);
+app.use('/api/members', memberRoute);
+app.use('/api/staff', staffRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {

@@ -87,4 +87,71 @@ exports.updateContentOrder = async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
+};
+
+exports.getContentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const content = await Content.findById(id);
+    if (!content) return res.status(404).json({ success: false, message: 'Content not found' });
+    res.json({ success: true, data: content });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.getContentWithProgram = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const content = await Content.findById(id).populate('program');
+    if (!content) return res.status(404).json({ success: false, message: 'Content not found' });
+    res.json({ success: true, data: content });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.getParsedMetadataContentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const content = await Content.findById(id);
+    if (!content) return res.status(404).json({ success: false, message: 'Content not found' });
+    let metadata = {};
+    try {
+      metadata = JSON.parse(content.content_metadata_json || '{}');
+    } catch (e) {}
+    res.json({ success: true, data: { ...content.toObject(), parsedMetadata: metadata } });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.getContentFile = async (req, res) => {
+  // Khung: trả về file hoặc link file nếu có
+  res.json({ success: true, message: 'getContentFile endpoint (chưa triển khai logic)' });
+};
+
+exports.createYouTubeContent = async (req, res) => {
+  // Khung: tạo content YouTube
+  res.json({ success: true, message: 'createYouTubeContent endpoint (chưa triển khai logic)' });
+};
+
+exports.createMarkdownContent = async (req, res) => {
+  // Khung: tạo content markdown
+  res.json({ success: true, message: 'createMarkdownContent endpoint (chưa triển khai logic)' });
+};
+
+exports.createPodcastContent = async (req, res) => {
+  // Khung: tạo content podcast
+  res.json({ success: true, message: 'createPodcastContent endpoint (chưa triển khai logic)' });
+};
+
+exports.uploadImage = async (req, res) => {
+  // Khung: upload image
+  res.json({ success: true, message: 'uploadImage endpoint (chưa triển khai logic)' });
+};
+
+exports.getImage = async (req, res) => {
+  // Khung: serve image
+  res.json({ success: true, message: 'getImage endpoint (chưa triển khai logic)' });
 }; 

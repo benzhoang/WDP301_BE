@@ -6,10 +6,66 @@
     "description": "API documentation for WDP301_BE, chuẩn hóa OpenAPI 3.0."
   },
   "servers": [
-    { "url": "http://localhost:3000", "description": "Development server" }
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
   ],
   "tags": [
-    { "name": "Users" }, { "name": "Products" }, { "name": "Orders" }, { "name": "Payments" }, { "name": "Categories" }, { "name": "Reviews" }, { "name": "Carts" }, { "name": "Enrolls" }, { "name": "Surveys" }, { "name": "SurveyResponses" }, { "name": "Blogs" }, { "name": "Contents" }, { "name": "Programs" }, { "name": "BookingSessions" }, { "name": "Slots" }, { "name": "Flags" }, { "name": "ConsultantSlots" }, { "name": "Consultants" }, { "name": "ConsoleLogs" }, { "name": "Assessments" }, { "name": "Actions" }, { "name": "Profiles" }, { "name": "Bookings" }
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Categories"
+    },
+    {
+      "name": "Enrolls"
+    },
+    {
+      "name": "Surveys"
+    },
+    {
+      "name": "SurveyResponses"
+    },
+    {
+      "name": "Blogs"
+    },
+    {
+      "name": "Contents"
+    },
+    {
+      "name": "Programs"
+    },
+    {
+      "name": "BookingSessions"
+    },
+    {
+      "name": "Slots"
+    },
+    {
+      "name": "Flags"
+    },
+    {
+      "name": "ConsultantSlots"
+    },
+    {
+      "name": "Consultants"
+    },
+    {
+      "name": "ConsoleLogs"
+    },
+    {
+      "name": "Assessments"
+    },
+    {
+      "name": "Actions"
+    },
+    {
+      "name": "Profiles"
+    },
+    {
+      "name": "Bookings"
+    }
   ],
   "components": {
     "securitySchemes": {
@@ -20,77 +76,1547 @@
       }
     },
     "schemas": {
-      "User": { "type": "object", "properties": { "_id": { "type": "string" }, "email": { "type": "string" }, "name": { "type": "string" } } },
-      "Product": { "type": "object", "properties": { "_id": { "type": "string" }, "name": { "type": "string" } } },
-      "Order": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Payment": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Category": { "type": "object", "properties": { "_id": { "type": "string" }, "name": { "type": "string" } } },
-      "Review": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Cart": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Enroll": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Survey": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "SurveyResponse": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Blog": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Content": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Program": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "BookingSession": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Slot": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Flag": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "ConsultantSlot": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Consultant": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "ConsoleLog": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Assessment": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Action": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Profile": { "type": "object", "properties": { "_id": { "type": "string" } } },
-      "Booking": { "type": "object", "properties": { "_id": { "type": "string" } } }
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Enroll": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Survey": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "SurveyResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Content": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Program": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "BookingSession": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Slot": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Flag": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ConsultantSlot": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Consultant": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ConsoleLog": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Assessment": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Action": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "paths": {
-    "/api/users": { "get": { "tags": ["Users"], "summary": "Get all users" }, "post": { "tags": ["Users"], "summary": "Create user" } },
-    "/api/users/{id}": { "get": { "tags": ["Users"], "summary": "Get user by id" }, "put": { "tags": ["Users"], "summary": "Update user" }, "delete": { "tags": ["Users"], "summary": "Delete user" } },
-    "/api/products": { "get": { "tags": ["Products"], "summary": "Get all products" }, "post": { "tags": ["Products"], "summary": "Create product" } },
-    "/api/products/{id}": { "get": { "tags": ["Products"], "summary": "Get product by id" }, "put": { "tags": ["Products"], "summary": "Update product" }, "delete": { "tags": ["Products"], "summary": "Delete product" } },
-    "/api/orders": { "get": { "tags": ["Orders"], "summary": "Get all orders" }, "post": { "tags": ["Orders"], "summary": "Create order" } },
-    "/api/orders/{id}": { "get": { "tags": ["Orders"], "summary": "Get order by id" }, "put": { "tags": ["Orders"], "summary": "Update order" }, "delete": { "tags": ["Orders"], "summary": "Delete order" } },
-    "/api/payments": { "get": { "tags": ["Payments"], "summary": "Get all payments" }, "post": { "tags": ["Payments"], "summary": "Create payment" } },
-    "/api/payments/{id}": { "get": { "tags": ["Payments"], "summary": "Get payment by id" }, "put": { "tags": ["Payments"], "summary": "Update payment" }, "delete": { "tags": ["Payments"], "summary": "Delete payment" } },
-    "/api/categories": { "get": { "tags": ["Categories"], "summary": "Get all categories" }, "post": { "tags": ["Categories"], "summary": "Create category" } },
-    "/api/categories/{id}": { "get": { "tags": ["Categories"], "summary": "Get category by id" }, "put": { "tags": ["Categories"], "summary": "Update category" }, "delete": { "tags": ["Categories"], "summary": "Delete category" } },
-    "/api/reviews": { "get": { "tags": ["Reviews"], "summary": "Get all reviews" }, "post": { "tags": ["Reviews"], "summary": "Create review" } },
-    "/api/reviews/{id}": { "get": { "tags": ["Reviews"], "summary": "Get review by id" }, "put": { "tags": ["Reviews"], "summary": "Update review" }, "delete": { "tags": ["Reviews"], "summary": "Delete review" } },
-    "/api/carts": { "get": { "tags": ["Carts"], "summary": "Get all carts" }, "post": { "tags": ["Carts"], "summary": "Create cart" } },
-    "/api/carts/{id}": { "get": { "tags": ["Carts"], "summary": "Get cart by id" }, "put": { "tags": ["Carts"], "summary": "Update cart" }, "delete": { "tags": ["Carts"], "summary": "Delete cart" } },
-    "/api/enrolls": { "get": { "tags": ["Enrolls"], "summary": "Get all enrolls" }, "post": { "tags": ["Enrolls"], "summary": "Create enroll" } },
-    "/api/enrolls/{id}": { "get": { "tags": ["Enrolls"], "summary": "Get enroll by id" }, "put": { "tags": ["Enrolls"], "summary": "Update enroll" }, "delete": { "tags": ["Enrolls"], "summary": "Delete enroll" } },
-    "/api/surveys": { "get": { "tags": ["Surveys"], "summary": "Get all surveys" }, "post": { "tags": ["Surveys"], "summary": "Create survey" } },
-    "/api/surveys/{id}": { "get": { "tags": ["Surveys"], "summary": "Get survey by id" }, "put": { "tags": ["Surveys"], "summary": "Update survey" }, "delete": { "tags": ["Surveys"], "summary": "Delete survey" } },
-    "/api/survey-responses": { "get": { "tags": ["SurveyResponses"], "summary": "Get all survey responses" }, "post": { "tags": ["SurveyResponses"], "summary": "Create survey response" } },
-    "/api/survey-responses/{id}": { "get": { "tags": ["SurveyResponses"], "summary": "Get survey response by id" }, "put": { "tags": ["SurveyResponses"], "summary": "Update survey response" }, "delete": { "tags": ["SurveyResponses"], "summary": "Delete survey response" } },
-    "/api/blogs": { "get": { "tags": ["Blogs"], "summary": "Get all blogs" }, "post": { "tags": ["Blogs"], "summary": "Create blog" } },
-    "/api/blogs/{id}": { "get": { "tags": ["Blogs"], "summary": "Get blog by id" }, "put": { "tags": ["Blogs"], "summary": "Update blog" }, "delete": { "tags": ["Blogs"], "summary": "Delete blog" } },
-    "/api/contents": { "get": { "tags": ["Contents"], "summary": "Get all contents" }, "post": { "tags": ["Contents"], "summary": "Create content" } },
-    "/api/contents/{id}": { "get": { "tags": ["Contents"], "summary": "Get content by id" }, "put": { "tags": ["Contents"], "summary": "Update content" }, "delete": { "tags": ["Contents"], "summary": "Delete content" } },
-    "/api/programs": { "get": { "tags": ["Programs"], "summary": "Get all programs" }, "post": { "tags": ["Programs"], "summary": "Create program" } },
-    "/api/programs/{id}": { "get": { "tags": ["Programs"], "summary": "Get program by id" }, "put": { "tags": ["Programs"], "summary": "Update program" }, "delete": { "tags": ["Programs"], "summary": "Delete program" } },
-    "/api/booking-sessions": { "get": { "tags": ["BookingSessions"], "summary": "Get all booking sessions" }, "post": { "tags": ["BookingSessions"], "summary": "Create booking session" } },
-    "/api/booking-sessions/{id}": { "get": { "tags": ["BookingSessions"], "summary": "Get booking session by id" }, "put": { "tags": ["BookingSessions"], "summary": "Update booking session" }, "delete": { "tags": ["BookingSessions"], "summary": "Delete booking session" } },
-    "/api/slots": { "get": { "tags": ["Slots"], "summary": "Get all slots" }, "post": { "tags": ["Slots"], "summary": "Create slot" } },
-    "/api/slots/{id}": { "get": { "tags": ["Slots"], "summary": "Get slot by id" }, "put": { "tags": ["Slots"], "summary": "Update slot" }, "delete": { "tags": ["Slots"], "summary": "Delete slot" } },
-    "/api/flags": { "get": { "tags": ["Flags"], "summary": "Get all flags" }, "post": { "tags": ["Flags"], "summary": "Create flag" } },
-    "/api/flags/{id}": { "get": { "tags": ["Flags"], "summary": "Get flag by id" }, "put": { "tags": ["Flags"], "summary": "Update flag" }, "delete": { "tags": ["Flags"], "summary": "Delete flag" } },
-    "/api/consultant-slots": { "get": { "tags": ["ConsultantSlots"], "summary": "Get all consultant slots" }, "post": { "tags": ["ConsultantSlots"], "summary": "Create consultant slot" } },
-    "/api/consultant-slots/{id}": { "get": { "tags": ["ConsultantSlots"], "summary": "Get consultant slot by id" }, "put": { "tags": ["ConsultantSlots"], "summary": "Update consultant slot" }, "delete": { "tags": ["ConsultantSlots"], "summary": "Delete consultant slot" } },
-    "/api/consultants": { "get": { "tags": ["Consultants"], "summary": "Get all consultants" }, "post": { "tags": ["Consultants"], "summary": "Create consultant" } },
-    "/api/consultants/{id}": { "get": { "tags": ["Consultants"], "summary": "Get consultant by id" }, "put": { "tags": ["Consultants"], "summary": "Update consultant" }, "delete": { "tags": ["Consultants"], "summary": "Delete consultant" } },
-    "/api/console-logs": { "get": { "tags": ["ConsoleLogs"], "summary": "Get all console logs" }, "post": { "tags": ["ConsoleLogs"], "summary": "Create console log" } },
-    "/api/console-logs/{id}": { "get": { "tags": ["ConsoleLogs"], "summary": "Get console log by id" }, "put": { "tags": ["ConsoleLogs"], "summary": "Update console log" }, "delete": { "tags": ["ConsoleLogs"], "summary": "Delete console log" } },
-    "/api/assessments": { "get": { "tags": ["Assessments"], "summary": "Get all assessments" }, "post": { "tags": ["Assessments"], "summary": "Create assessment" } },
-    "/api/assessments/{id}": { "get": { "tags": ["Assessments"], "summary": "Get assessment by id" }, "put": { "tags": ["Assessments"], "summary": "Update assessment" }, "delete": { "tags": ["Assessments"], "summary": "Delete assessment" } },
-    "/api/actions": { "get": { "tags": ["Actions"], "summary": "Get all actions" }, "post": { "tags": ["Actions"], "summary": "Create action" } },
-    "/api/actions/{id}": { "get": { "tags": ["Actions"], "summary": "Get action by id" }, "put": { "tags": ["Actions"], "summary": "Update action" }, "delete": { "tags": ["Actions"], "summary": "Delete action" } },
-    "/api/profiles": { "get": { "tags": ["Profiles"], "summary": "Get all profiles" }, "post": { "tags": ["Profiles"], "summary": "Create profile" } },
-    "/api/profiles/{id}": { "get": { "tags": ["Profiles"], "summary": "Get profile by id" }, "put": { "tags": ["Profiles"], "summary": "Update profile" }, "delete": { "tags": ["Profiles"], "summary": "Delete profile" } },
-    "/api/bookings": { "get": { "tags": ["Bookings"], "summary": "Get all bookings" }, "post": { "tags": ["Bookings"], "summary": "Create booking" } },
-    "/api/bookings/{id}": { "get": { "tags": ["Bookings"], "summary": "Get booking by id" }, "put": { "tags": ["Bookings"], "summary": "Update booking" }, "delete": { "tags": ["Bookings"], "summary": "Delete booking" } }
+    "/api/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create user",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Category" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create category",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Category" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get category by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Category" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Categories"],
+        "summary": "Update category",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Category" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete category",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enrolls": {
+      "get": {
+        "tags": ["Enrolls"],
+        "summary": "Get all enrolls",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Enroll" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Enrolls"],
+        "summary": "Create enroll",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Enroll" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enrolls/{id}": {
+      "get": {
+        "tags": ["Enrolls"],
+        "summary": "Get enroll by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Enroll" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Enrolls"],
+        "summary": "Update enroll",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Enroll" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Enrolls"],
+        "summary": "Delete enroll",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surveys": {
+      "get": {
+        "tags": ["Surveys"],
+        "summary": "Get all surveys",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Survey" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Surveys"],
+        "summary": "Create survey",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Survey" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surveys/{id}": {
+      "get": {
+        "tags": ["Surveys"],
+        "summary": "Get survey by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Survey" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Surveys"],
+        "summary": "Update survey",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Survey" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Surveys"],
+        "summary": "Delete survey",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/survey-responses": {
+      "get": {
+        "tags": ["SurveyResponses"],
+        "summary": "Get all survey responses",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SurveyResponse" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["SurveyResponses"],
+        "summary": "Create survey response",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/survey-responses/{id}": {
+      "get": {
+        "tags": ["SurveyResponses"],
+        "summary": "Get survey response by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["SurveyResponses"],
+        "summary": "Update survey response",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SurveyResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["SurveyResponses"],
+        "summary": "Delete survey response",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/blogs": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get all blogs",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Blog" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Blogs"],
+        "summary": "Create blog",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Blog" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/blogs/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Blog" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Blogs"],
+        "summary": "Update blog",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Blog" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Blogs"],
+        "summary": "Delete blog",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contents": {
+      "get": {
+        "tags": ["Contents"],
+        "summary": "Get all contents",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Content" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contents"],
+        "summary": "Create content",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Content" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contents/{id}": {
+      "get": {
+        "tags": ["Contents"],
+        "summary": "Get content by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Content" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Contents"],
+        "summary": "Update content",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Content" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contents"],
+        "summary": "Delete content",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/programs": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get all programs",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Program" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Programs"],
+        "summary": "Create program",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Program" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/programs/{id}": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get program by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Program" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Programs"],
+        "summary": "Update program",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Program" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Programs"],
+        "summary": "Delete program",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-sessions": {
+      "get": {
+        "tags": ["BookingSessions"],
+        "summary": "Get all booking sessions",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/BookingSession" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["BookingSessions"],
+        "summary": "Create booking session",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BookingSession" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-sessions/{id}": {
+      "get": {
+        "tags": ["BookingSessions"],
+        "summary": "Get booking session by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BookingSession" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["BookingSessions"],
+        "summary": "Update booking session",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BookingSession" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["BookingSessions"],
+        "summary": "Delete booking session",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/slots": {
+      "get": {
+        "tags": ["Slots"],
+        "summary": "Get all slots",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Slot" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Slots"],
+        "summary": "Create slot",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Slot" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/slots/{id}": {
+      "get": {
+        "tags": ["Slots"],
+        "summary": "Get slot by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Slot" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Slots"],
+        "summary": "Update slot",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Slot" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Slots"],
+        "summary": "Delete slot",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flags": {
+      "get": {
+        "tags": ["Flags"],
+        "summary": "Get all flags",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Flag" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Flags"],
+        "summary": "Create flag",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Flag" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flags/{id}": {
+      "get": {
+        "tags": ["Flags"],
+        "summary": "Get flag by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Flag" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Flags"],
+        "summary": "Update flag",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Flag" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Flags"],
+        "summary": "Delete flag",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultant-slots": {
+      "get": {
+        "tags": ["ConsultantSlots"],
+        "summary": "Get all consultant slots",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ConsultantSlot" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["ConsultantSlots"],
+        "summary": "Create consultant slot",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultant-slots/{id}": {
+      "get": {
+        "tags": ["ConsultantSlots"],
+        "summary": "Get consultant slot by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["ConsultantSlots"],
+        "summary": "Update consultant slot",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsultantSlot" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["ConsultantSlots"],
+        "summary": "Delete consultant slot",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultants": {
+      "get": {
+        "tags": ["Consultants"],
+        "summary": "Get all consultants",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Consultant" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Consultants"],
+        "summary": "Create consultant",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Consultant" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultants/{id}": {
+      "get": {
+        "tags": ["Consultants"],
+        "summary": "Get consultant by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Consultant" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Consultants"],
+        "summary": "Update consultant",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Consultant" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Consultants"],
+        "summary": "Delete consultant",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/console-logs": {
+      "get": {
+        "tags": ["ConsoleLogs"],
+        "summary": "Get all console logs",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ConsoleLog" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["ConsoleLogs"],
+        "summary": "Create console log",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/console-logs/{id}": {
+      "get": {
+        "tags": ["ConsoleLogs"],
+        "summary": "Get console log by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["ConsoleLogs"],
+        "summary": "Update console log",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConsoleLog" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["ConsoleLogs"],
+        "summary": "Delete console log",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assessments": {
+      "get": {
+        "tags": ["Assessments"],
+        "summary": "Get all assessments",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Assessment" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Assessments"],
+        "summary": "Create assessment",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Assessment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assessments/{id}": {
+      "get": {
+        "tags": ["Assessments"],
+        "summary": "Get assessment by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Assessment" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Assessments"],
+        "summary": "Update assessment",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Assessment" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Assessments"],
+        "summary": "Delete assessment",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/actions": {
+      "get": {
+        "tags": ["Actions"],
+        "summary": "Get all actions",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Action" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Actions"],
+        "summary": "Create action",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Action" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/actions/{id}": {
+      "get": {
+        "tags": ["Actions"],
+        "summary": "Get action by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Action" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Actions"],
+        "summary": "Update action",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Action" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Actions"],
+        "summary": "Delete action",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profiles": {
+      "get": {
+        "tags": ["Profiles"],
+        "summary": "Get all profiles",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Profile" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Profiles"],
+        "summary": "Create profile",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Profile" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profiles/{id}": {
+      "get": {
+        "tags": ["Profiles"],
+        "summary": "Get profile by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Profile" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Profiles"],
+        "summary": "Update profile",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Profile" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Profiles"],
+        "summary": "Delete profile",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings": {
+      "get": {
+        "tags": ["Bookings"],
+        "summary": "Get all bookings",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Booking" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Bookings"],
+        "summary": "Create booking",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Booking" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}": {
+      "get": {
+        "tags": ["Bookings"],
+        "summary": "Get booking by id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Booking" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Bookings"],
+        "summary": "Update booking",
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Booking" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Bookings"],
+        "summary": "Delete booking",
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

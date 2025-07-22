@@ -4,6 +4,7 @@ const actionSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
   type: { type: String },
+  range: { type: Number },
   // Thêm các trường khác nếu cần
 }, {
   timestamps: true

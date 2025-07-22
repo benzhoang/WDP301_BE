@@ -4,6 +4,7 @@ const categoryController = require("../controllers/categoryController");
 
 router.get("/", categoryController.getAllCategories);
 router.post("/", categoryController.createCategory);
-// Thêm các route khác nếu cần
+router.put("/:id", categoryController.updateCategory);
+router.delete("/:id", categoryController.deleteCategory);
 
 module.exports = router; 

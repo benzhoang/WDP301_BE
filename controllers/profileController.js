@@ -55,4 +55,15 @@ exports.getUserProfile = async (req, res) => {
     console.error("Get user profile error:", error);
     res.status(500).json({ success: false, error: "Failed to retrieve profile.", details: error.message });
   }
+};
+
+exports.getProfileStatus = async (req, res) => {
+  try {
+    const userId = req.user?.userId || req.user?._id || req.user?.id || req.query.user_id;
+    if (!userId) return res.status(400).json({ success: false, message: 'User ID is required' });
+    const profile = await Profile.findOne({ user_id: userId });
+    res.status(200).json({ success: true, hasProfile: !!profile });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to get profile status', error: err.message });
+  }
 }; 
