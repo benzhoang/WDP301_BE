@@ -132,7 +132,7 @@ exports.getUserProgramsWithEnrollmentStatus = async (req, res) => {
     const Enroll = require('../models/enrollModel');
     const enrolls = await Enroll.find({ user_id: userId });
     const enrolledProgramIds = new Set(enrolls.map(e => e.program_id.toString()));
-    const result = programs.map(p => ({ ...p.toObject(), isEnrolled: enrolledProgramIds.has(p._id.toString()) }));
+    const result = programs.map(p => ({ ...p.toObject(), is_enrolled: enrolledProgramIds.has(p._id.toString()) }));
     res.json({ success: true, data: result });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const assessmentSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   type: { type: String, required: true },
   score: { type: Number },
-  result: { type: String },
-  details: { type: String }, // Có thể lưu JSON string hoặc object
-  taken_at: { type: Date, default: Date.now }
+  result_json: { type: Object },
+  taken_at: { type: Date, default: Date.now },
+  action_id: { type: mongoose.Schema.Types.ObjectId, ref: "Action" , required: true}// Tham chiếu đến Action nếu cần
 }, {
   timestamps: true
 });

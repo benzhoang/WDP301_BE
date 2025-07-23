@@ -50,8 +50,15 @@ exports.getAssessmentsByUserId = async (req, res) => {
 exports.getAssessmentsByUserToken = async (req, res) => {
   try {
     const userId = req.user?.userId;
-    const assessments = await Assessment.find({ user: userId }).populate("user");
-    res.status(200).json({ success: true, data: assessments, count: assessments.length });
+    const assessments = await Assessment.find({ user_id: userId }).populate("user_id");
+    res.status(200).json({
+      success: true,
+      data: assessments.map(a => ({
+        ...a.toObject(),
+        create_at: a.createdAt
+      })),
+      count: assessments.length
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -116,48 +123,72 @@ exports.getAssessmentsByDateRange = async (req, res) => {
 exports.takeTestFromUser = async (req, res) => {
   try {
     const { score, type, results } = req.body;
-    const userId = req.user?.userId;
+    const userId = req.user?.userId || req.body.userId;
+
     if (!results || !Array.isArray(results) || results.length === 0) {
       return res.status(400).json({ success: false, message: "Results array is required and cannot be empty" });
     }
+
     if (!userId || score === undefined || score === null) {
       return res.status(400).json({ success: false, message: "User ID and score are required" });
     }
+
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
     if (user.role && user.role.toLowerCase() !== "member") {
       return res.status(400).json({ success: false, message: "Only members can take tests" });
     }
-    // Tìm action phù hợp với score (range <= score, lớn nhất)
+
     const actions = await Action.find({ type }).sort({ range: -1 });
     const action = actions.find(a => a.range <= score);
     if (!action) {
       return res.status(404).json({ success: false, message: `No action found for score ${score}` });
     }
-    // Lưu assessment
+
+    const result_json = {
+      score: score,
+      risk_level: action.risk_level || "moderate", // tuỳ bạn setup
+      results: results, // linh động
+      recommendations: action.description
+    };
+
     const assessment = new Assessment({
-      user: userId,
+      user_id: userId,
+      action_id: action._id,
       type: type || "test",
       score,
-      result: JSON.stringify({ result: results, score }),
-      taken_at: new Date(),
-      details: action.description
+      result_json,
+      taken_at: new Date()
     });
+
     await assessment.save();
-    // Trả về thông tin action gợi ý
+
     res.status(201).json({
       success: true,
       data: {
+        assessment_id: assessment._id,
         user: { user_id: userId },
-        test_result: { score, type: assessment.type, taken_at: assessment.taken_at },
-        recommended_action: { description: action.description, range: action.range, type: action.type }
+        test_result: {
+          score,
+          type: assessment.type,
+          taken_at: assessment.taken_at,
+          result_json: assessment.result_json
+        },
+        recommended_action: {
+          description: action.description,
+          range: action.range,
+          type: action.type,
+          risk_level: action.risk_level || "moderate"
+        }
       },
       message: "Test completed and assessment saved successfully"
     });
   } catch (err) {
+    console.error("❌ Error in takeTestFromUser:", err);
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 exports.getAssessmentDetails = async (req, res) => {
   try {
