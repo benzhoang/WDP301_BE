@@ -87,6 +87,16 @@ exports.getSurveysByProgramId = async (req, res) => {
   }
 };
 
+exports.getSurveysByProgramAndType = async (req, res) => {
+  try {
+    const { programId, type } = req.params;
+    const surveys = await Survey.find({ program_id: programId, type });
+    res.status(200).json({ success: true, data: surveys });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to get surveys', error: err.message });
+  }
+};
+
 // Cập nhật survey: soft delete question, version, validate
 exports.updateSurvey = async (req, res) => {
   try {
@@ -143,4 +153,4 @@ exports.updateSurvey = async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
-}; 
+};

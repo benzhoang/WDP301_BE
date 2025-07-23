@@ -73,7 +73,8 @@ exports.createEnroll = async (req, res) => {
     if (exists) return res.status(409).json({ success: false, message: 'User is already enrolled in this program' });
     const contents = await Content.find({ program_id });
     const progressArray = contents.map(c => ({ content_id: c._id, complete: false }));
-    const enroll = new Enroll({ user_id: userId, program_id, start_at: new Date(), complete_at: null, progress: JSON.stringify(progressArray) });
+    const enroll = new Enroll({ user_id: userId, program_id, start_at: new Date(), complete_at: null, progress: progressArray });
+    console.log('enroll', enroll);
     await enroll.save();
     res.status(201).json({ success: true, data: { ...enroll.toObject(), progress: progressArray }, message: 'Enrollment created successfully' });
   } catch (err) {

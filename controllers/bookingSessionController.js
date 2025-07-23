@@ -24,7 +24,7 @@ exports.getBookingSessionsByMember = async (req, res) => {
 
 exports.createBookingSession = async (req, res) => {
   try {
-    const { consultant_id, slot_id, booking_date } = req.body;
+    const { consultant_id, slot_id, booking_date, note } = req.body;
     const member_id = req.user?.userId || req.user?._id || req.user?.id;
     // Giới hạn 3 booking đang diễn ra
     const ongoingCount = await BookingSession.countDocuments({ member_id, status: { $in: ['Đang chờ xác nhận', 'Đã xác nhận'] } });
@@ -41,8 +41,10 @@ exports.createBookingSession = async (req, res) => {
     if (memberBooking) {
       return res.status(409).json({ success: false, message: 'Bạn đã có một cuộc hẹn được lên lịch cho ngày này' });
     }
+    // Kiểm tra consultant có tồn tại không
+    const consultant = await Consultant.findById(consultant_id);
     // Tạo booking mới
-    const booking = new BookingSession({ consultant_id, member_id, slot_id, booking_date, status: 'Đang chờ xác nhận' });
+    const booking = new BookingSession({ consultant_id, member_id, slot_id, booking_date, status: 'Đang chờ xác nhận', note, google_meet_link: consultant?.google_meet_link || '' });
     await booking.save();
     res.status(201).json({ success: true, data: booking, message: 'Đặt lịch hẹn thành công' });
   } catch (err) {
@@ -118,12 +120,53 @@ exports.updateBookingSessionStatusAndLink = async (req, res) => {
 
 exports.getBookingSessionsByConsultant = async (req, res) => {
   try {
-    // Lấy consultant_id từ token hoặc query hoặc body
-    const consultantId = req.user?.userId || req.user?._id || req.user?.id || req.query.consultant_id || req.body.consultant_id;
-    if (!consultantId) return res.status(400).json({ success: false, message: 'Consultant ID is required' });
+    const consultantId = req.params.consultantId || req.body.consultant_id;
+    if (!consultantId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Consultant ID is required'
+      });
+    }
+
+    // Tìm các booking của consultant
     const bookings = await BookingSession.find({ consultant_id: consultantId });
-    res.status(200).json({ success: true, data: bookings, count: bookings.length, message: 'Lấy danh sách lịch hẹn của chuyên gia thành công' });
+
+    // Lấy các slot_id từ booking
+    const slotIds = bookings.map(booking => booking.slot_id);
+
+    // Tìm tất cả slot tương ứng
+    const slots = await Slot.find({ _id: { $in: slotIds } });
+
+    // Map thông tin từ slot sang từng booking
+    const bookingList = bookings.map(booking => {
+      const slot = slots.find(s => s._id.toString() === booking.slot_id.toString());
+      return {
+        booking_id: booking._id,
+        member_id: booking.member_id,
+        consultant_id: booking.consultant_id,
+        slot_id: booking.slot_id,
+        booking_date: booking.booking_date,
+        status: booking.status,
+        notes: booking.notes,
+        google_meet_link: booking.google_meet_link,
+        start_time: slot?.start_time,
+        end_time: slot?.end_time
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      data: bookingList,
+      count: bookings.length,
+      message: 'Lấy danh sách lịch hẹn của chuyên gia thành công'
+    });
+
   } catch (err) {
-    res.status(500).json({ success: false, data: [], count: 0, message: err.message || 'Không thể lấy danh sách lịch hẹn của chuyên gia' });
+    res.status(500).json({
+      success: false,
+      data: [],
+      count: 0,
+      message: err.message || 'Không thể lấy danh sách lịch hẹn của chuyên gia'
+    });
   }
-}; 
+};

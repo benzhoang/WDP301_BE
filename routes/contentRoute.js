@@ -19,5 +19,6 @@ router.delete("/:id", contentController.deleteContent);
 router.patch("/:id/order", contentController.updateContentOrder);
 router.post("/images/upload", contentController.uploadImage);
 router.get("/images/:filename", contentController.getImage);
+router.get('/preview/:program_id', contentController.getPreviewContent);
 
-module.exports = router; 
+module.exports = router;

@@ -1,6 +1,7 @@
 const Program = require("../models/programModel");
 const Category = require("../models/categoryModel");
 const User = require("../models/userModel");
+const { Types } = require("mongoose");
 
 exports.createProgram = async (req, res) => {
   try {
@@ -35,8 +36,19 @@ exports.getAllPrograms = async (req, res) => {
 exports.getProgramsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params;
-    const programs = await Program.find({ category: categoryId }).populate("category creator");
-    res.json({ success: true, data: programs });
+    const programs = await Program.find({ category_id: categoryId }).populate("category_id");
+    const formattedPrograms = programs.map(program => ({
+      program_id: program._id,
+      name: program.name,
+      description: program.description,
+      category_id: program.category_id,
+      start_date: program.start_date,
+      end_date: program.end_date,
+      status: program.status,
+      image: program.image,
+      creator: program.creator
+    }));
+    res.json({ success: true, data: formattedPrograms });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -76,7 +88,7 @@ exports.deleteProgram = async (req, res) => {
 exports.getProgramById = async (req, res) => {
   try {
     const { id } = req.params;
-    const program = await Program.findById(id).populate("category creator");
+    const program = await Program.findById(id).populate("category_id creator");
     if (!program) return res.status(404).json({ success: false, message: "Program not found" });
     res.json({ success: true, data: program });
   } catch (err) {
@@ -113,11 +125,10 @@ exports.getCommunityEventPrograms = async (req, res) => {
 
 exports.getUserProgramsWithEnrollmentStatus = async (req, res) => {
   try {
-    // Giả sử req.user.userId đã có (middleware xác thực)
     const userId = req.user?.userId || req.user?._id || req.user?.id;
     if (!userId) return res.status(401).json({ success: false, message: 'Unauthorized' });
-    const programs = await Program.find().populate('category creator');
-    // Giả sử có model Enroll, mỗi enroll có user_id, program_id
+    // Sửa lại populate cho đúng trường
+    const programs = await Program.find().populate('category_id creator');
     const Enroll = require('../models/enrollModel');
     const enrolls = await Enroll.find({ user_id: userId });
     const enrolledProgramIds = new Set(enrolls.map(e => e.program_id.toString()));
@@ -134,12 +145,13 @@ exports.getProgramRecommendationsByAge = async (req, res) => {
     const userId = req.user?.userId || req.user?._id || req.user?.id;
     if (!userId) return res.status(401).json({ success: false, message: 'Unauthorized' });
     const Profile = require('../models/profileModel');
-    const profile = await Profile.findOne({ user_id: userId });
+    const objectUserId = new Types.ObjectId(userId);
+    const profile = await Profile.findOne({ user_id: objectUserId });
     if (!profile || !profile.date_of_birth) return res.status(400).json({ success: false, message: 'No profile or date_of_birth' });
     const birthYear = new Date(profile.date_of_birth).getFullYear();
     const age = new Date().getFullYear() - birthYear;
     // Giả sử Program có trường age_group (ví dụ: '18+', '13-17', ...)
-    const programs = await Program.find().populate('category creator');
+    const programs = await Program.find().populate('category_id creator');
     // Lọc program phù hợp với tuổi (ví dụ: age_group === '18+' && age >= 18)
     const recommended = programs.filter(p => {
       if (!p.age_group) return true;
@@ -160,4 +172,4 @@ exports.getProgramSurveyAnalytics = async (req, res) => {
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
-}; 
+};

@@ -154,4 +154,35 @@ exports.uploadImage = async (req, res) => {
 exports.getImage = async (req, res) => {
   // Khung: serve image
   res.json({ success: true, message: 'getImage endpoint (chưa triển khai logic)' });
-}; 
+};
+
+exports.getPreviewContent = async (req, res) => {
+  try {
+    const { program_id } = req.params;
+    if (!program_id) {
+      return res.status(400).json({ success: false, message: "Program ID is required" });
+    }
+    // Chỉ lấy các trường cơ bản
+    const contents = await Content.find(
+      { program_id }
+    ).select("_id title type orders").sort({ orders: 1 });
+    res.status(200).json({
+      success: true,
+      data: contents.map(content => ({
+        content_id: content._id,
+        title: content.title,
+        type: content.type,
+        orders: content.orders
+      })),
+      count: contents.length,
+      message: 'Content preview retrieved successfully',
+      program_id
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve preview content",
+      error: error.message,
+    });
+  }
+};

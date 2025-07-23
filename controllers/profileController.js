@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 
 exports.createProfile = async (req, res) => {
   try {
-    const { name, bio_json, date_of_birth, job } = req.body;
+    const { name, bio_json, dateOfBirth, job } = req.body;
     const userId = req.body.user || req.user?.userId;
     if (!userId) {
       return res.status(400).json({ success: false, error: "User ID is required" });
@@ -26,10 +26,10 @@ exports.createProfile = async (req, res) => {
     }
     // Tạo profile mới
     const newProfile = new Profile({
-      user: userId,
+      user_id: userId,
       name: name || null,
       bio_json: bio_json || null,
-      date_of_birth: date_of_birth || null,
+      date_of_birth: dateOfBirth || null,
       job: job || null,
     });
     const savedProfile = await newProfile.save();

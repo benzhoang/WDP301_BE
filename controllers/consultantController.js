@@ -1,25 +1,56 @@
 const Consultant = require('../models/consultantModel');
 const User = require('../models/userModel');
 const Profile = require('../models/profileModel');
+const ConsultantSlot = require('../models/consultantSlotModel');
 
 exports.getAllConsultants = async (req, res) => {
   try {
     const consultants = await Consultant.find();
-    // Lấy profile và user cho từng consultant
     const users = await User.find();
     const profiles = await Profile.find();
-    const userMap = new Map(users.map(u => [u._id.toString(), u]));
-    const profileMap = new Map(profiles.map(p => [p.user_id.toString(), p]));
+    const consultantSlots = await ConsultantSlot.find();
+
+    const userMap = new Map(users.filter(u => u._id).map(u => [u._id.toString(), u]));
+    const profileMap = new Map(profiles.filter(p => p.user_id).map(p => [p.user_id.toString(), p]));
+
+    // Map consultantId to slots
+    const slotsMap = new Map();
+    consultantSlots.forEach(slot => {
+      const cid = slot.consultant?.toString();
+      if (!cid) return;
+      if (!slotsMap.has(cid)) slotsMap.set(cid, []);
+      slotsMap.get(cid).push({
+        day_of_week: slot.day_of_week,
+        start_time: slot.start_time,
+        end_time: slot.end_time
+      });
+    });
+
     const result = consultants.map(c => {
-      const user = userMap.get(c.user_id.toString());
-      const profile = profileMap.get(c.user_id.toString());
+      const uid = c.user_id?.toString();
+      const cid = c._id?.toString();
+      const user = uid ? userMap.get(uid) : null;
+      const profile = uid ? profileMap.get(uid) : null;
+      const available_slots = cid ? slotsMap.get(cid) || [] : [];
       return {
-        ...c.toObject(),
+        id_consultant: c._id,
+        google_meet_link: c.google_meet_link,
+        certification: c.certification,
+        speciality: c.speciality,
+        user_id: c.user_id,
         user,
-        profile
+        profile,
+        available_slots
       };
     });
-    res.status(200).json({ success: true, data: result, message: 'Consultants retrieved successfully' });
+    res.status(200).json({
+      success: true,
+      data: {
+        totalConsultants: consultants.length,
+        consultants: result
+      },
+      message: 'Consultants retrieved successfully'
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to retrieve consultants', error: err.message });
   }
@@ -32,7 +63,26 @@ exports.getConsultantById = async (req, res) => {
     if (!consultant) return res.status(404).json({ success: false, message: 'Consultant not found' });
     const user = await User.findById(consultant.user_id);
     const profile = await Profile.findOne({ user_id: consultant.user_id });
-    res.status(200).json({ success: true, data: { ...consultant.toObject(), user, profile }, message: 'Consultant retrieved successfully' });
+    const consultantSlots = await ConsultantSlot.find({ consultant: consultant._id });
+    const available_slots = consultantSlots.map(slot => ({
+      day_of_week: slot.day_of_week,
+      start_time: slot.start_time,
+      end_time: slot.end_time
+    }));
+    res.status(200).json({
+      success: true,
+      data: {
+        id_consultant: consultant._id,
+        google_meet_link: consultant.google_meet_link,
+        certification: consultant.certification,
+        speciality: consultant.speciality,
+        user_id: consultant.user_id,
+        user,
+        profile,
+        available_slots
+      },
+      message: 'Consultant retrieved successfully'
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to retrieve consultant', error: err.message });
   }

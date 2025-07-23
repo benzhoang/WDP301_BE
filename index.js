@@ -35,7 +35,7 @@ app.use(cors());
 
 app.disable('etag');
 // Mount user routes
-app.use('/api/users', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/booking-sessions', bookingSessionRoutes);
@@ -46,8 +46,8 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/console-logs', consoleLogRoutes);
 app.use('/api/consultants', consultantRoutes);
 app.use('/api/consultant-slots', consultantSlotRoutes);
-app.use('/api/contents', contentRoutes);
-app.use('/api/enrolls', enrollRoutes);
+app.use('/api/content', contentRoutes);
+app.use('/api/enrollments', enrollRoutes);
 app.use('/api/flags', flagRoutes);
 app.use('/api/programs', programRoutes);
 app.use('/api/slots', slotRoutes);

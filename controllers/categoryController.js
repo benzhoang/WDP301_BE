@@ -14,7 +14,11 @@ exports.createCategory = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
-    res.json({ success: true, data: categories });
+    const categoriesList = categories.map(cat => ({
+      ...cat.toObject(),
+      category_id: cat._id
+    }));
+    res.json({ success: true, data: categoriesList });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
