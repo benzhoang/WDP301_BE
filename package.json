@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "devStart": "nodemon index.js"
   },
   "keywords": [],
@@ -25,7 +25,6 @@
     "googleapis": "^150.0.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.6.3",
     "morgan": "^1.10.0",
     "mssql": "^11.0.1",
     "multer": "^2.0.1",
