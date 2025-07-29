@@ -9,6 +9,7 @@ router.get("/user/:userId", enrollController.getEnrollmentsByUser);
 router.get("/program/:programId", enrollController.getEnrollmentsByProgram);
 router.get("/check/:programId", enrollController.checkMyEnrollment);
 router.put("/:id/complete", enrollController.completeEnrollment);
+router.put("/:enrollId/content/:contentId/toggle", enrollController.toggleContentCompletion);
 router.delete("/my/:programId", enrollController.deleteMyEnrollment);
 // Thêm các route khác nếu cần
 

@@ -30,7 +30,7 @@ exports.getAllContents = async (req, res) => {
 exports.getContentByProgram = async (req, res) => {
   try {
     const { programId } = req.params;
-    const contents = await Content.find({ program: programId }).populate("program");
+    const contents = await Content.find({ program_id: programId });
     res.json({ success: true, data: contents });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
