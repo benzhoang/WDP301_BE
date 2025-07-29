@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const connectDB = require("./configs/db");
+const morgan = require("morgan");
 const userRoutes = require("./routes/userRoute");
 const profileRoutes = require("./routes/profileRoute");
 const bookingRoutes = require("./routes/bookingRoute");
@@ -33,7 +34,7 @@ const quizRoutes = require("./routes/quizRoute");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
+app.use(morgan("dev"));
 app.disable("etag");
 // Mount user routes
 app.use("/api/user", userRoutes);
