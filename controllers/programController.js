@@ -21,19 +21,23 @@ exports.createProgram = async (req, res) => {
       contents,
     } = req.body;
 
-    // Validate category và creator
+    // Kiểm tra category
     if (category && !(await Category.findById(category))) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Category not found" });
-    }
-    if (creator && !(await User.findById(creator))) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Creator not found" });
+      return res.status(404).json({
+        success: false,
+        error: "Category not found",
+      });
     }
 
-    // Tạo chương trình trước (chưa có quiz_id)
+    // Kiểm tra creator
+    if (creator && !(await User.findById(creator))) {
+      return res.status(404).json({
+        success: false,
+        error: "Creator not found",
+      });
+    }
+
+    // Tạo chương trình (chưa gán quiz)
     const program = new Program({
       name,
       description,
@@ -44,18 +48,27 @@ exports.createProgram = async (req, res) => {
       image,
       creator,
     });
+
     await program.save();
 
     // Tạo quiz nếu có
     let createdQuiz = null;
     if (quiz) {
+      // Validate trường duration
+      if (!quiz.duration || typeof quiz.duration !== "number") {
+        return res.status(400).json({
+          success: false,
+          error: "Quiz duration is required and must be a number",
+        });
+      }
+
       createdQuiz = await Quiz.create({
         name: quiz.name,
         description: quiz.description,
-        program_id: program._id,
+        duration: quiz.duration,
       });
 
-      // Thêm câu hỏi vào quiz
+      // Tạo danh sách câu hỏi nếu có
       if (quiz.questions?.length > 0) {
         for (const q of quiz.questions) {
           await Question.create({
@@ -67,7 +80,7 @@ exports.createProgram = async (req, res) => {
         }
       }
 
-      // Gán quiz_id lại cho Program
+      // Gán quiz_id vào program
       program.quiz_id = createdQuiz._id;
       await program.save();
     }
@@ -82,6 +95,7 @@ exports.createProgram = async (req, res) => {
       }
     }
 
+    // Trả kết quả thành công
     res.status(201).json({
       success: true,
       program,
@@ -89,9 +103,14 @@ exports.createProgram = async (req, res) => {
     });
   } catch (err) {
     console.error("Create Program Error:", err);
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
   }
 };
+
+
 
 exports.getAllPrograms = async (req, res) => {
   try {
