@@ -22,8 +22,8 @@ exports.canTakeQuiz = async (req, res) => {
 
   const completed = Array.isArray(enroll.progress)
     ? enroll.progress
-        .filter((p) => p.complete)
-        .map((p) => p.content_id.toString())
+      .filter((p) => p.complete)
+      .map((p) => p.content_id.toString())
     : [];
 
   const allDone = contentIds.every((id) => completed.includes(id));
@@ -51,8 +51,8 @@ exports.submitQuiz = async (req, res) => {
   const contents = await Content.find({ program_id: program._id });
   const completed = Array.isArray(enroll.progress)
     ? enroll.progress
-        .filter((p) => p.complete)
-        .map((p) => p.content_id.toString())
+      .filter((p) => p.complete)
+      .map((p) => p.content_id.toString())
     : [];
 
   const allDone = contents.every((c) => completed.includes(c._id.toString()));
@@ -170,5 +170,218 @@ exports.getQuizByProgram = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+// GET /api/programs/:programId/student-result
+exports.getStudentResult = async (req, res) => {
+  try {
+    const { programId } = req.params;
+    const user_id = req.user.userId;
+
+    // Kiểm tra xem user có đăng ký program này không
+    const enroll = await Enroll.findOne({ user_id, program_id: programId });
+    if (!enroll) {
+      return res.status(404).json({
+        success: false,
+        message: "Bạn chưa đăng ký khóa học này"
+      });
+    }
+
+    // Lấy thông tin program
+    const program = await Program.findById(programId);
+    if (!program) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy khóa học"
+      });
+    }
+
+    // Lấy danh sách content của program
+    const contents = await Content.find({ program_id: programId });
+
+    // Tính toán tiến độ học tập
+    const completedContents = Array.isArray(enroll.progress)
+      ? enroll.progress.filter(p => p.complete).map(p => p.content_id.toString())
+      : [];
+
+    const totalContents = contents.length;
+    const completedCount = completedContents.length;
+    const progressPercentage = totalContents > 0 ? Math.round((completedCount / totalContents) * 100) : 0;
+
+    // Lấy kết quả quiz nếu có
+    let quizResult = null;
+    if (program.quiz_id) {
+      const quizSubmission = await QuizSubmission.findOne({
+        user_id,
+        quiz_id: program.quiz_id,
+        course_id: programId
+      });
+
+      if (quizSubmission) {
+        const quiz = await Quiz.findById(program.quiz_id);
+        const questions = await Question.find({ quiz_id: program.quiz_id });
+
+        quizResult = {
+          submission_id: quizSubmission._id,
+          submitted_at: quizSubmission.submitted_at,
+          score: quizSubmission.score,
+          total_questions: questions.length,
+          percentage: questions.length > 0 ? Math.round((quizSubmission.score / questions.length) * 100) : 0,
+          status: quizSubmission.status,
+          feedback: quizSubmission.feedback
+        };
+      }
+    }
+
+    // Kiểm tra trạng thái hoàn thành
+    const isCompleted = enroll.completed_at ? true : false;
+    const completedAt = enroll.completed_at;
+
+    // Tạo response
+    const result = {
+      success: true,
+      program: {
+        _id: program._id,
+        name: program.name,
+        description: program.description
+      },
+      enrollment: {
+        enrolled_at: enroll.enrolled_at,
+        status: enroll.status,
+        completed_at: completedAt,
+        is_completed: isCompleted
+      },
+      progress: {
+        total_contents: totalContents,
+        completed_contents: completedCount,
+        progress_percentage: progressPercentage,
+        completed_content_ids: completedContents
+      },
+      quiz_result: quizResult,
+      summary: {
+        can_take_quiz: totalContents > 0 && completedCount === totalContents,
+        has_quiz: !!program.quiz_id,
+        has_submitted_quiz: !!quizResult
+      }
+    };
+
+    res.json(result);
+
+  } catch (err) {
+    console.error("Error getting student result:", err);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi server khi lấy kết quả học tập",
+      error: err.message
+    });
+  }
+};
+
+// GET /api/programs/:programId/student-result/detailed
+exports.getDetailedStudentResult = async (req, res) => {
+  try {
+    const { programId } = req.params;
+    const user_id = req.user.userId;
+
+    // Kiểm tra enrollment
+    const enroll = await Enroll.findOne({ user_id, program_id: programId });
+    if (!enroll) {
+      return res.status(404).json({
+        success: false,
+        message: "Bạn chưa đăng ký khóa học này"
+      });
+    }
+
+    // Lấy thông tin program và content
+    const program = await Program.findById(programId);
+    const contents = await Content.find({ program_id: programId }).sort({ order: 1 });
+
+    // Lấy chi tiết tiến độ từng content
+    const contentProgress = contents.map(content => {
+      const progress = Array.isArray(enroll.progress)
+        ? enroll.progress.find(p => p.content_id.toString() === content._id.toString())
+        : null;
+
+      return {
+        content_id: content._id,
+        title: content.title,
+        type: content.type,
+        order: content.order,
+        is_completed: progress ? progress.complete : false,
+        completed_at: progress ? progress.completed_at : null,
+        time_spent: progress ? progress.time_spent : 0
+      };
+    });
+
+    // Lấy chi tiết kết quả quiz nếu có
+    let detailedQuizResult = null;
+    if (program.quiz_id) {
+      const quizSubmission = await QuizSubmission.findOne({
+        user_id,
+        quiz_id: program.quiz_id,
+        course_id: programId
+      });
+
+      if (quizSubmission) {
+        const questions = await Question.find({ quiz_id: program.quiz_id });
+
+        // Lấy chi tiết từng câu trả lời
+        const detailedAnswers = quizSubmission.answers.map(answer => {
+          const question = questions.find(q => q._id.toString() === answer.question_id.toString());
+          return {
+            question_id: answer.question_id,
+            question_text: question ? question.name : "Câu hỏi không tồn tại",
+            question_type: question ? question.type : "unknown",
+            selected_options: answer.selected_options,
+            written_answer: answer.written_answer,
+            is_correct: answer.is_correct,
+            correct_options: question ? question.options.filter(opt => opt.is_correct).map(opt => ({
+              _id: opt._id,
+              text: opt.text
+            })) : []
+          };
+        });
+
+        detailedQuizResult = {
+          submission_id: quizSubmission._id,
+          submitted_at: quizSubmission.submitted_at,
+          score: quizSubmission.score,
+          total_questions: questions.length,
+          percentage: questions.length > 0 ? Math.round((quizSubmission.score / questions.length) * 100) : 0,
+          status: quizSubmission.status,
+          feedback: quizSubmission.feedback,
+          detailed_answers: detailedAnswers
+        };
+      }
+    }
+
+    const result = {
+      success: true,
+      program: {
+        _id: program._id,
+        name: program.name,
+        description: program.description,
+        quiz_id: program.quiz_id
+      },
+      enrollment: {
+        enrolled_at: enroll.enrolled_at,
+        status: enroll.status,
+        completed_at: enroll.completed_at,
+        is_completed: !!enroll.completed_at
+      },
+      content_progress: contentProgress,
+      quiz_result: detailedQuizResult
+    };
+
+    res.json(result);
+
+  } catch (err) {
+    console.error("Error getting detailed student result:", err);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi server khi lấy chi tiết kết quả học tập",
+      error: err.message
+    });
   }
 };

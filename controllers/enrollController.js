@@ -38,7 +38,14 @@ exports.getEnrollmentsByUser = async (req, res) => {
 
 exports.getEnrollmentsByProgram = async (req, res) => {
   try {
+    console.log("=== getEnrollmentsByProgram called ===");
+    console.log("Full request params:", req.params);
+    console.log("Request URL:", req.url);
+    console.log("Request method:", req.method);
+
     const { programId } = req.params;
+    console.log("Extracted programId:", programId);
+
     const enrolls = await Enroll.find({ program_id: programId });
     res.status(200).json({
       success: true,
@@ -76,8 +83,27 @@ exports.getEnrollmentById = async (req, res) => {
 
 exports.checkMyEnrollment = async (req, res) => {
   try {
+    console.log("=== checkMyEnrollment called ===");
+    console.log("Full request params:", req.params);
+    console.log("Full request user:", req.user);
+    console.log("Request URL:", req.url);
+    console.log("Request method:", req.method);
+
     const userId = req.user?.userId || req.user?._id || req.user?.id;
-    const { programId } = req.params;
+    console.log("Extracted userId:", userId);
+
+    const programId = req.params.programId;
+    console.log("Extracted programId:", programId);
+
+    if (!programId) {
+      return res.status(400).json({
+        success: false,
+        message: "programId is required",
+        params: req.params,
+        url: req.url
+      });
+    }
+
     const enrolls = await Enroll.find({
       user_id: userId,
       program_id: programId,

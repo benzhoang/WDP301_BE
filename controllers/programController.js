@@ -37,7 +37,7 @@ exports.createProgram = async (req, res) => {
     const program = new Program({
       name,
       description,
-      category,
+      category_id: category,
       start_date,
       end_date,
       status,
@@ -95,7 +95,7 @@ exports.createProgram = async (req, res) => {
 
 exports.getAllPrograms = async (req, res) => {
   try {
-    const programs = await Program.find().populate("category creator");
+    const programs = await Program.find().populate("category_id creator");
     res.json({ success: true, data: programs });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -130,7 +130,7 @@ exports.getProgramsByCreator = async (req, res) => {
   try {
     const { creatorId } = req.params;
     const programs = await Program.find({ creator: creatorId }).populate(
-      "category creator"
+      "category_id creator"
     );
     res.json({ success: true, data: programs });
   } catch (err) {
@@ -176,13 +176,13 @@ exports.getProgramById = async (req, res) => {
 exports.getAllProgramsWithCategoryDetails = async (req, res) => {
   try {
     // Lấy tất cả program, populate category
-    const programs = await Program.find().populate("category creator");
+    const programs = await Program.find().populate("category_id creator");
     // Gom nhóm theo category nếu cần
     const grouped = {};
     programs.forEach((p) => {
-      const catId = p.category?._id?.toString() || "uncategorized";
+      const catId = p.category_id?._id?.toString() || "uncategorized";
       if (!grouped[catId])
-        grouped[catId] = { category: p.category, programs: [] };
+        grouped[catId] = { category: p.category_id, programs: [] };
       grouped[catId].programs.push(p);
     });
     res.json({ success: true, data: Object.values(grouped) });
@@ -196,7 +196,7 @@ exports.getCommunityEventPrograms = async (req, res) => {
     // Giả sử có trường isCommunityEvent hoặc type === 'community-event'
     const programs = await Program.find({
       $or: [{ isCommunityEvent: true }, { type: "community-event" }],
-    }).populate("category creator");
+    }).populate("category_id creator");
     res.json({ success: true, data: programs });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
