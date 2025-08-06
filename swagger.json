@@ -5,11 +5,7 @@
     "description": "API for user registration, login, profile management and soft delete.",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/api"
-    }
-  ],
+  "servers": [],
   "tags": [
     {
       "name": "Auth",
