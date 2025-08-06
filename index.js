@@ -73,9 +73,10 @@ app.get("/", (req, res) => {
 
 // Kết nối DB và khởi động server
 connectDB().then(() => {
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 'http://localhost:3000';
+  console.log(port)
   app.listen(port, () => {
-    console.log(`🚀 Server running at http://localhost:${port}`);
-    console.log(`📚 Swagger UI available at http://localhost:${port}/api-docs`);
+    console.log(`🚀 Server running at ${port}`);
+    console.log(`📚 Swagger UI available at ${port}/api-docs`);
   });
 });
