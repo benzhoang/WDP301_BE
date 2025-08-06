@@ -21,7 +21,7 @@
     }
   ],
   "paths": {
-    "/login": {
+    "/api/login": {
       "post": {
         "tags": [
           "Auth"
@@ -65,7 +65,7 @@
         }
       }
     },
-    "/register": {
+    "/api/register": {
       "post": {
         "tags": [
           "Auth"
@@ -109,7 +109,7 @@
         }
       }
     },
-    "/google-login": {
+    "/api/google-login": {
       "post": {
         "tags": [
           "Auth"
@@ -122,7 +122,7 @@
         }
       }
     },
-    "/google-register": {
+    "/api/google-register": {
       "post": {
         "tags": [
           "Auth"
@@ -135,7 +135,7 @@
         }
       }
     },
-    "/users": {
+    "/api/user": {
       "get": {
         "tags": [
           "Users"
@@ -211,7 +211,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "/api/user/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -326,7 +326,7 @@
         }
       }
     },
-    "/users/profile-combined": {
+    "/api/user/profile-combined": {
       "get": {
         "tags": [
           "Users"
@@ -401,7 +401,7 @@
         }
       }
     },
-    "/users/delete-account": {
+    "/api/user/delete-account": {
       "delete": {
         "tags": [
           "Users"
@@ -425,7 +425,7 @@
         }
       }
     },
-    "/users/role/": {
+    "/api/user/role/": {
       "get": {
         "tags": [
           "Users"
@@ -446,7 +446,7 @@
         }
       }
     },
-    "/categories/": {
+    "/api/categories/": {
       "get": {
         "tags": [
           "Category"
@@ -509,7 +509,7 @@
         }
       }
     },
-    "/categories/{id}": {
+    "/api/categories/{id}": {
       "put": {
         "tags": [
           "Category"
@@ -585,7 +585,7 @@
         }
       }
     },
-    "/consultants": {
+    "/api/consultants": {
       "get": {
         "summary": "Lấy danh sách tất cả tư vấn viên",
         "tags": [
@@ -641,7 +641,7 @@
         }
       }
     },
-    "/consultants/{id}": {
+    "/api/consultants/{id}": {
       "get": {
         "summary": "Lấy tư vấn viên theo ID",
         "tags": [
@@ -749,7 +749,7 @@
         }
       }
     },
-    "/consultants/search": {
+    "/api/consultants/search": {
       "get": {
         "summary": "Tìm kiếm tư vấn viên theo tên",
         "tags": [
@@ -782,7 +782,7 @@
         }
       }
     },
-    "/consultants/email/{email}": {
+    "/api/consultants/email/{email}": {
       "get": {
         "summary": "Lấy tư vấn viên theo email",
         "tags": [
@@ -821,7 +821,7 @@
         }
       }
     },
-    "/consultants/by-user/{userId}": {
+    "/api/consultants/by-user/{userId}": {
       "get": {
         "summary": "Lấy tư vấn viên theo ID người dùng",
         "tags": [
@@ -859,7 +859,7 @@
         }
       }
     },
-    "/consultant-slots/{id}": {
+    "/api/consultant-slots/{id}": {
       "get": {
         "summary": "Lấy tất cả slot theo consultant ID",
         "tags": [
@@ -906,7 +906,7 @@
         }
       }
     },
-    "/consultant-slots/bulk/{consultantId}": {
+    "/api/consultant-slots/bulk/{consultantId}": {
       "post": {
         "summary": "Tạo nhiều slot cho consultant",
         "tags": [
@@ -974,7 +974,7 @@
         }
       }
     },
-    "/consultant-slots/update": {
+    "/api/consultant-slots/update": {
       "put": {
         "summary": "Cập nhật slot theo ngày cho consultant",
         "tags": [
@@ -1046,7 +1046,7 @@
         }
       }
     },
-    "/consultant-slots/consultant/{consultantId}": {
+    "/api/consultant-slots/consultant/{consultantId}": {
       "delete": {
         "summary": "Xóa toàn bộ slot theo consultant ID",
         "tags": [
@@ -1074,7 +1074,7 @@
         }
       }
     },
-    "/booking-sessions": {
+    "/api/booking-sessions": {
       "get": {
         "tags": [
           "BookingSession"
@@ -1113,7 +1113,7 @@
         }
       }
     },
-    "/booking-sessions/member": {
+    "/api/booking-sessions/member": {
       "get": {
         "tags": [
           "BookingSession"
@@ -1131,7 +1131,7 @@
         }
       }
     },
-    "/booking-sessions/scheduled": {
+    "/api/booking-sessions/scheduled": {
       "get": {
         "tags": [
           "BookingSession"
@@ -1149,7 +1149,7 @@
         }
       }
     },
-    "/booking-sessions/consultant/{consultantId}": {
+    "/api/booking-sessions/consultant/{consultantId}": {
       "get": {
         "tags": [
           "BookingSession"
@@ -1177,7 +1177,7 @@
         }
       }
     },
-    "/booking-sessions/{bookingId}": {
+    "/api/booking-sessions/{bookingId}": {
       "put": {
         "tags": [
           "BookingSession"
@@ -1215,7 +1215,7 @@
         }
       }
     },
-    "/booking-sessions/{id}": {
+    "/api/booking-sessions/{id}": {
       "delete": {
         "tags": [
           "BookingSession"
@@ -1243,7 +1243,7 @@
         }
       }
     },
-    "/booking-sessions/{id}/status-link": {
+    "/api/booking-sessions/{id}/status-link": {
       "put": {
         "tags": [
           "BookingSession"
@@ -1281,7 +1281,7 @@
         }
       }
     },
-    "/blogs": {
+    "/api/blogs": {
       "get": {
         "tags": [
           "Blog"
@@ -1320,7 +1320,7 @@
         }
       }
     },
-    "/blogs/with-image": {
+    "/api/blogs/with-image": {
       "post": {
         "tags": [
           "Blog"
@@ -1338,7 +1338,7 @@
         }
       }
     },
-    "/blogs/author/{authorId}": {
+    "/api/blogs/author/{authorId}": {
       "get": {
         "tags": [
           "Blog"
@@ -1361,7 +1361,7 @@
         }
       }
     },
-    "/blogs/status/{status}": {
+    "/api/blogs/status/{status}": {
       "get": {
         "tags": [
           "Blog"
@@ -1384,7 +1384,7 @@
         }
       }
     },
-    "/blogs/my": {
+    "/api/blogs/my": {
       "get": {
         "tags": [
           "Blog"
@@ -1397,7 +1397,7 @@
         }
       }
     },
-    "/blogs/pending": {
+    "/api/blogs/pending": {
       "get": {
         "tags": [
           "Blog"
@@ -1410,7 +1410,7 @@
         }
       }
     },
-    "/blogs/admin/blogs": {
+    "/api/blogs/admin/blogs": {
       "get": {
         "tags": [
           "Blog"
@@ -1423,7 +1423,7 @@
         }
       }
     },
-    "/blogs/moderation/stats": {
+    "/api/blogs/moderation/stats": {
       "get": {
         "tags": [
           "Blog"
@@ -1436,7 +1436,7 @@
         }
       }
     },
-    "/blogs/{id}": {
+    "/api/blogs/{id}": {
       "get": {
         "tags": [
           "Blog"
@@ -1521,7 +1521,7 @@
         }
       }
     },
-    "/blogs/{id}/status": {
+    "/api/blogs/{id}/status": {
       "patch": {
         "tags": [
           "Blog"
@@ -1567,7 +1567,7 @@
         }
       }
     },
-    "/blogs/{id}/approve": {
+    "/api/blogs/{id}/approve": {
       "patch": {
         "tags": [
           "Blog"
@@ -1595,7 +1595,7 @@
         }
       }
     },
-    "/blogs/{id}/reject": {
+    "/api/blogs/{id}/reject": {
       "patch": {
         "tags": [
           "Blog"
@@ -1637,7 +1637,7 @@
         }
       }
     },
-    "/actions": {
+    "/api/actions": {
       "get": {
         "summary": "Lấy tất cả actions",
         "tags": [
@@ -1715,7 +1715,7 @@
               }
             }
           },
-          "/actions": {
+          "/api/actions": {
             "get": {
               "summary": "Lấy tất cả actions",
               "tags": [
@@ -1799,7 +1799,7 @@
         }
       }
     },
-    "/actions/{id}": {
+    "/api/actions/{id}": {
       "get": {
         "summary": "Lấy action theo ID",
         "tags": [
@@ -1918,7 +1918,7 @@
         }
       }
     },
-    "/actions/type/{type}": {
+    "/api/actions/type/{type}": {
       "get": {
         "summary": "Lấy actions theo loại",
         "tags": [
@@ -1941,7 +1941,7 @@
         }
       }
     },
-    "/actions/range": {
+    "/api/actions/range": {
       "get": {
         "summary": "Lấy actions theo khoảng range",
         "tags": [
@@ -1970,7 +1970,7 @@
         }
       }
     },
-    "/programs": {
+    "/api/programs": {
       "get": {
         "summary": "Get all programs",
         "tags": [
@@ -2023,7 +2023,7 @@
         }
       }
     },
-    "/programs/{id}": {
+    "/api/programs/{id}": {
       "get": {
         "summary": "Get program by ID",
         "tags": [
@@ -2134,7 +2134,7 @@
         }
       }
     },
-    "/programs/category/{categoryId}": {
+    "/api/programs/category/{categoryId}": {
       "get": {
         "summary": "Get programs by category",
         "tags": [
@@ -2164,7 +2164,7 @@
         }
       }
     },
-    "/programs/creator/{creatorId}": {
+    "/api/programs/creator/{creatorId}": {
       "get": {
         "summary": "Get programs by creator",
         "tags": [
@@ -2194,7 +2194,7 @@
         }
       }
     },
-    "/programs/category-details": {
+    "/api/programs/category-details": {
       "get": {
         "summary": "Get all programs with category details grouped",
         "tags": [
@@ -2225,7 +2225,7 @@
         }
       }
     },
-    "/programs/community-events": {
+    "/api/programs/community-events": {
       "get": {
         "summary": "Get community event programs",
         "tags": [
@@ -2245,7 +2245,7 @@
         }
       }
     },
-    "/programs/my-enrollment-status": {
+    "/api/programs/my-enrollment-status": {
       "get": {
         "summary": "Get user programs with enrollment status",
         "tags": [
@@ -2285,7 +2285,7 @@
         }
       }
     },
-    "/programs/recommendations": {
+    "/api/programs/recommendations": {
       "get": {
         "summary": "Get program recommendations by user age",
         "tags": [
@@ -2305,7 +2305,7 @@
         }
       }
     },
-    "/programs/{programId}/survey-analytics": {
+    "/api/programs/{programId}/survey-analytics": {
       "get": {
         "summary": "Get survey analytics for program",
         "tags": [
@@ -2340,7 +2340,7 @@
         }
       }
     },
-    "/quizzes/{quizId}/check": {
+    "/api/quizzes/{quizId}/check": {
       "get": {
         "summary": "Check if user can take a quiz",
         "tags": [
@@ -2396,7 +2396,7 @@
         }
       }
     },
-    "/quizzes/{quizId}/submit": {
+    "/api/quizzes/{quizId}/submit": {
       "post": {
         "summary": "Submit quiz answers",
         "tags": [
@@ -2452,7 +2452,7 @@
         }
       }
     },
-    "/programs/{programId}/quiz": {
+    "/api/programs/{programId}/quiz": {
       "get": {
         "summary": "Get quiz by program without answers",
         "tags": [
@@ -2498,7 +2498,7 @@
         }
       }
     },
-    "/programs/{programId}/quiz/answers": {
+    "/api/programs/{programId}/quiz/answers": {
       "get": {
         "summary": "Get quiz by program with answers",
         "tags": [
@@ -2544,7 +2544,7 @@
         }
       }
     },
-    "/quizzes": {
+    "/api/quizzes": {
       "post": {
         "summary": "Create a new quiz",
         "tags": [
@@ -2589,7 +2589,7 @@
         }
       }
     },
-    "/quizzes/{id}": {
+    "/api/quizzes/{id}": {
       "put": {
         "summary": "Update an existing quiz",
         "tags": [
@@ -2645,7 +2645,7 @@
         }
       }
     },
-    "/programs/{programId}/result": {
+    "/api/programs/{programId}/result": {
       "get": {
         "summary": "Get student result for a program",
         "tags": [
@@ -2691,7 +2691,7 @@
         }
       }
     },
-    "/programs/{programId}/result/detailed": {
+    "/api/programs/{programId}/result/detailed": {
       "get": {
         "summary": "Get detailed student result for a program",
         "tags": [
@@ -2737,7 +2737,7 @@
         }
       }
     },
-    "/content": {
+    "/api/content": {
       "get": {
         "summary": "Get all contents",
         "tags": [
@@ -2820,7 +2820,7 @@
         }
       }
     },
-    "/content/program/{programId}": {
+    "/api/content/program/{programId}": {
       "get": {
         "summary": "Get contents by program ID",
         "tags": [
@@ -2861,7 +2861,7 @@
         }
       }
     },
-    "/content/type/{type}": {
+    "/api/content/type/{type}": {
       "get": {
         "summary": "Get contents by type",
         "tags": [
@@ -2910,7 +2910,7 @@
         }
       }
     },
-    "/content/content-type/{contentType}": {
+    "/api/content/content-type/{contentType}": {
       "get": {
         "summary": "Get contents by content type",
         "tags": [
@@ -2951,7 +2951,7 @@
         }
       }
     },
-    "/content/{id}": {
+    "/api/content/{id}": {
       "get": {
         "summary": "Get content by ID",
         "tags": [
@@ -3110,7 +3110,7 @@
         }
       }
     },
-    "/content/{id}/with-program": {
+    "/api/content/{id}/with-program": {
       "get": {
         "summary": "Get content by ID with program details",
         "tags": [
@@ -3161,7 +3161,7 @@
         }
       }
     },
-    "/content/{id}/parsed-metadata": {
+    "/api/content/{id}/parsed-metadata": {
       "get": {
         "summary": "Get content by ID with parsed metadata",
         "tags": [
@@ -3212,7 +3212,7 @@
         }
       }
     },
-    "/content/file/{id}": {
+    "/api/content/file/{id}": {
       "get": {
         "summary": "Get content file",
         "tags": [
@@ -3243,7 +3243,7 @@
         }
       }
     },
-    "/content/youtube": {
+    "/api/content/youtube": {
       "post": {
         "summary": "Create YouTube content",
         "tags": [
@@ -3268,7 +3268,7 @@
         }
       }
     },
-    "/content/markdown": {
+    "/api/content/markdown": {
       "post": {
         "summary": "Create Markdown content",
         "tags": [
@@ -3293,7 +3293,7 @@
         }
       }
     },
-    "/content/podcast": {
+    "/api/content/podcast": {
       "post": {
         "summary": "Create Podcast content",
         "tags": [
@@ -3318,7 +3318,7 @@
         }
       }
     },
-    "/content/{id}/order": {
+    "/api/content/{id}/order": {
       "patch": {
         "summary": "Update content order",
         "tags": [
@@ -3382,7 +3382,7 @@
         }
       }
     },
-    "/content/images/upload": {
+    "/api/content/images/upload": {
       "post": {
         "summary": "Upload image for content",
         "tags": [
@@ -3407,7 +3407,7 @@
         }
       }
     },
-    "/content/images/{filename}": {
+    "/api/content/images/{filename}": {
       "get": {
         "summary": "Get image for content",
         "tags": [
@@ -3438,7 +3438,7 @@
         }
       }
     },
-    "/content/preview/{program_id}": {
+    "/api/content/preview/{program_id}": {
       "get": {
         "summary": "Get preview of contents for a program",
         "tags": [
@@ -3489,7 +3489,7 @@
         }
       }
     },
-    "/slots": {
+    "/api/slots": {
       "get": {
         "summary": "Get all slots",
         "tags": [
@@ -3562,7 +3562,7 @@
         }
       }
     },
-    "/enrollments": {
+    "/api/enrollments": {
       "get": {
         "summary": "Get all enrollments",
         "tags": [
@@ -3655,7 +3655,7 @@
         }
       }
     },
-    "/enrollments/user/{userId}": {
+    "/api/enrollments/user/{userId}": {
       "get": {
         "summary": "Get enrollments by user ID",
         "tags": [
@@ -3696,7 +3696,7 @@
         }
       }
     },
-    "/enrollments/check/{programId}": {
+    "/api/enrollments/check/{programId}": {
       "get": {
         "summary": "Check user's enrollment for a program",
         "tags": [
@@ -3752,7 +3752,7 @@
         }
       }
     },
-    "/enrollments/program/{programId}": {
+    "/api/enrollments/program/{programId}": {
       "get": {
         "summary": "Get enrollments by program ID",
         "tags": [
@@ -3793,7 +3793,7 @@
         }
       }
     },
-    "/enrollments/{enrollId}": {
+    "/api/enrollments/{enrollId}": {
       "get": {
         "summary": "Get enrollment by ID",
         "tags": [
@@ -3844,7 +3844,7 @@
         }
       }
     },
-    "/enrollments/{id}/complete": {
+    "/api/enrollments/{id}/complete": {
       "put": {
         "summary": "Mark enrollment as completed",
         "tags": [
@@ -3895,7 +3895,7 @@
         }
       }
     },
-    "/enrollments/{enrollId}/content/{contentId}/toggle": {
+    "/api/enrollments/{enrollId}/content/{contentId}/toggle": {
       "patch": {
         "summary": "Toggle content completion status in an enrollment",
         "tags": [
@@ -3955,7 +3955,7 @@
         }
       }
     },
-    "/enrollments/my/{programId}": {
+    "/api/enrollments/my/{programId}": {
       "delete": {
         "summary": "Delete user's enrollment for a program",
         "tags": [
@@ -4011,7 +4011,7 @@
         }
       }
     },
-    "/assessments": {
+    "/api/assessments": {
       "get": {
         "summary": "Get all assessments",
         "tags": [
@@ -4089,7 +4089,7 @@
         }
       }
     },
-    "/assessments/user/{userId}": {
+    "/api/assessments/user/{userId}": {
       "get": {
         "summary": "Get assessments by user ID",
         "tags": [
@@ -4130,7 +4130,7 @@
         }
       }
     },
-    "/assessments/type/{type}": {
+    "/api/assessments/type/{type}": {
       "get": {
         "summary": "Get assessments by type",
         "tags": [
@@ -4171,7 +4171,7 @@
         }
       }
     },
-    "/assessments/date-range": {
+    "/api/assessments/date-range": {
       "get": {
         "summary": "Get assessments by date range",
         "tags": [
@@ -4233,7 +4233,7 @@
         }
       }
     },
-    "/assessments/with-relations": {
+    "/api/assessments/with-relations": {
       "get": {
         "summary": "Get assessments with related data",
         "tags": [
@@ -4263,7 +4263,7 @@
         }
       }
     },
-    "/assessments/me": {
+    "/api/assessments/me": {
       "get": {
         "summary": "Get assessments for the authenticated user",
         "tags": [
@@ -4298,7 +4298,7 @@
         }
       }
     },
-    "/assessments/{id}": {
+    "/api/assessments/{id}": {
       "put": {
         "summary": "Update an assessment",
         "tags": [
@@ -4408,7 +4408,7 @@
         }
       }
     },
-    "/assessments/submit": {
+    "/api/assessments/submit": {
       "post": {
         "summary": "Submit a test for a user",
         "tags": [
@@ -4483,7 +4483,7 @@
         }
       }
     },
-    "/assessments/details/{userId}": {
+    "/api/assessments/details/{userId}": {
       "get": {
         "summary": "Get assessment details for a user",
         "tags": [
@@ -4544,7 +4544,7 @@
         }
       }
     },
-    "/assessment-questions/type/{type}": {
+    "/api/assessment-questions/type/{type}": {
       "get": {
         "summary": "Get assessment questions by type",
         "tags": [
