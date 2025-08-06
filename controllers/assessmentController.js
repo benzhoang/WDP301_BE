@@ -19,7 +19,7 @@ exports.createAssessment = async (req, res) => {
 
 exports.getAllAssessments = async (req, res) => {
   try {
-    const assessments = await Assessment.find().populate("user");
+    const assessments = await Assessment.find().populate("user_id");
     res.json({ success: true, data: assessments });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

@@ -129,7 +129,7 @@ exports.submitQuiz = async (req, res) => {
   res.status(201).json(submission);
 };
 // GET /api/programs/:programId/quiz
-exports.getQuizByProgram = async (req, res) => {
+exports.getQuizByProgramWithoutAnswers = async (req, res) => {
   try {
     const { programId } = req.params;
 
@@ -160,6 +160,51 @@ exports.getQuizByProgram = async (req, res) => {
       options: q.options.map((opt) => ({
         _id: opt._id,
         text: opt.text,
+      })),
+    }));
+
+    res.json({
+      success: true,
+      quiz,
+      questions: safeQuestions,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.getQuizByProgramWithAnswers = async (req, res) => {
+  try {
+    const { programId } = req.params;
+
+    const program = await Program.findById(programId);
+    if (!program || !program.quiz_id) {
+      return res.status(404).json({
+        success: false,
+        message: "Chưa có quiz cho khóa học này",
+      });
+    }
+
+    const quiz = await Quiz.findById(program.quiz_id);
+    if (!quiz) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy quiz",
+      });
+    }
+
+    const questions = await Question.find({ quiz_id: quiz._id });
+
+    // Ẩn is_correct để người dùng không biết trước đáp án
+    const safeQuestions = questions.map((q) => ({
+      _id: q._id,
+      name: q.name,
+      type: q.type,
+      quiz_id: q.quiz_id,
+      options: q.options.map((opt) => ({
+        _id: opt._id,
+        text: opt.text,
+        is_correct: opt.is_correct,
       })),
     }));
 
@@ -383,5 +428,105 @@ exports.getDetailedStudentResult = async (req, res) => {
       message: "Lỗi server khi lấy chi tiết kết quả học tập",
       error: err.message
     });
+  }
+};
+// POST /api/quizzes
+exports.createQuiz = async (req, res) => {
+  try {
+    const { name, description, duration, questions, program_id } = req.body;
+    const user_id = req.user.userId;
+
+    // Validate program
+    const program = await Program.findById(program_id);
+    if (!program) {
+      return res.status(404).json({ success: false, message: "Program not found" });
+    }
+
+    // Create quiz
+    const quiz = await Quiz.create({
+      name,
+      description,
+      duration,
+      creator: user_id,
+      program_id
+    });
+
+    // Create questions
+    const questionDocs = await Promise.all(
+      questions.map(q =>
+        Question.create({
+          name: q.name,
+          type: q.type,
+          quiz_id: quiz._id,
+          options: q.options.map(opt => ({
+            text: opt.text,
+            is_correct: opt.is_correct,
+            score: opt.score
+          }))
+        })
+      )
+    );
+
+    // Update program with quiz_id
+    program.quiz_id = quiz._id;
+    console.log(program)
+    await program.save();
+
+    res.status(201).json({
+      success: true,
+      quiz,
+      questions: questionDocs
+    });
+  } catch (err) {
+    console.error("Error creating quiz:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+// PUT /api/quizzes/:id
+exports.updateQuiz = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, duration, questions } = req.body;
+
+    // Find quiz
+    const quiz = await Quiz.findById(id);
+    if (!quiz) {
+      return res.status(404).json({ success: false, message: "Quiz not found" });
+    }
+
+    // Update quiz
+    quiz.name = name || quiz.name;
+    quiz.description = description || quiz.description;
+    quiz.duration = duration || quiz.duration;
+    await quiz.save();
+
+    // Delete existing questions
+    await Question.deleteMany({ quiz_id: id });
+
+    // Create new questions
+    const questionDocs = await Promise.all(
+      questions.map(q =>
+        Question.create({
+          name: q.name,
+          type: q.type,
+          quiz_id: id,
+          options: q.options.map(opt => ({
+            text: opt.text,
+            is_correct: opt.isCorrect,
+            score: opt.score
+          }))
+        })
+      )
+    );
+
+    res.json({
+      success: true,
+      quiz,
+      questions: questionDocs
+    });
+  } catch (err) {
+    console.error("Error updating quiz:", err);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
