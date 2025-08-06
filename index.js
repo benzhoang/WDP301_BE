@@ -30,6 +30,7 @@ const googleRoute = require("./routes/googleRoute");
 const memberRoute = require("./routes/memberRoute");
 const staffRoute = require("./routes/staffRoute");
 const quizRoutes = require("./routes/quizRoute");
+const assessmentQuestionRoutes = require("./routes/assessmentQuestionRoute");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,6 +62,7 @@ app.use("/api/google", googleRoute);
 app.use("/api/members", memberRoute);
 app.use("/api/staff", staffRoute);
 app.use("/api/quizzes", quizRoutes);
+app.use("/api/assessment-questions", assessmentQuestionRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {

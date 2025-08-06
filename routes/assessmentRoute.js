@@ -13,7 +13,7 @@ router.get('/with-relations', assessmentController.getAssessmentsWithRelations);
 router.get('/me', authentica, assessmentController.getAssessmentsByUserToken);
 router.put('/:id', assessmentController.updateAssessment);
 router.delete('/:id', assessmentController.deleteAssessment);
-router.post('/take-test', authentica, assessmentController.takeTestFromUser);
+router.post('/submit', authentica, assessmentController.takeTestFromUser);
 router.get('/details/:userId', assessmentController.getAssessmentDetails);
 // Thêm các route khác nếu cần
 

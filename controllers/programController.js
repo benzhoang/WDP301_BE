@@ -5,6 +5,8 @@ const Quiz = require("../models/quizModel");
 const Question = require("../models/questionModel");
 const Content = require("../models/contentModel");
 const { Types } = require("mongoose");
+const Survey = require("../models/surveyModel");
+const SurveyResponse = require("../models/surveyResponseModel");
 
 exports.createProgram = async (req, res) => {
   try {
@@ -21,41 +23,54 @@ exports.createProgram = async (req, res) => {
       contents,
     } = req.body;
 
-    // Validate category và creator
+    // Kiểm tra category
     if (category && !(await Category.findById(category))) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Category not found" });
-    }
-    if (creator && !(await User.findById(creator))) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Creator not found" });
+      return res.status(404).json({
+        success: false,
+        error: "Category not found",
+      });
     }
 
-    // Tạo chương trình trước (chưa có quiz_id)
+    // Kiểm tra creator
+    if (creator && !(await User.findById(creator))) {
+      return res.status(404).json({
+        success: false,
+        error: "Creator not found",
+      });
+    }
+
+    // Tạo chương trình (chưa gán quiz)
     const program = new Program({
       name,
       description,
-      category,
+      category_id: category,
       start_date,
       end_date,
       status,
       image,
       creator,
     });
+
     await program.save();
 
     // Tạo quiz nếu có
     let createdQuiz = null;
     if (quiz) {
+      // Validate trường duration
+      if (!quiz.duration || typeof quiz.duration !== "number") {
+        return res.status(400).json({
+          success: false,
+          error: "Quiz duration is required and must be a number",
+        });
+      }
+
       createdQuiz = await Quiz.create({
         name: quiz.name,
         description: quiz.description,
-        program_id: program._id,
+        duration: quiz.duration,
       });
 
-      // Thêm câu hỏi vào quiz
+      // Tạo danh sách câu hỏi nếu có
       if (quiz.questions?.length > 0) {
         for (const q of quiz.questions) {
           await Question.create({
@@ -67,7 +82,7 @@ exports.createProgram = async (req, res) => {
         }
       }
 
-      // Gán quiz_id lại cho Program
+      // Gán quiz_id vào program
       program.quiz_id = createdQuiz._id;
       await program.save();
     }
@@ -82,6 +97,7 @@ exports.createProgram = async (req, res) => {
       }
     }
 
+    // Trả kết quả thành công
     res.status(201).json({
       success: true,
       program,
@@ -89,13 +105,18 @@ exports.createProgram = async (req, res) => {
     });
   } catch (err) {
     console.error("Create Program Error:", err);
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
   }
 };
 
+
+
 exports.getAllPrograms = async (req, res) => {
   try {
-    const programs = await Program.find().populate("category creator");
+    const programs = await Program.find().populate("category_id creator");
     res.json({ success: true, data: programs });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -130,22 +151,147 @@ exports.getProgramsByCreator = async (req, res) => {
   try {
     const { creatorId } = req.params;
     const programs = await Program.find({ creator: creatorId }).populate(
-      "category creator"
+      "category_id creator"
     );
     res.json({ success: true, data: programs });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
-// Cập nhật chương trình
 exports.updateProgram = async (req, res) => {
   try {
     const { id } = req.params;
-    const update = req.body;
-    const program = await Program.findByIdAndUpdate(id, update, { new: true });
-    res.json({ success: true, data: program });
+    const {
+      name,
+      description,
+      category,
+      start_date,
+      end_date,
+      status,
+      image,
+      creator,
+      quiz,
+      contents,
+    } = req.body;
+
+    // Kiểm tra chương trình tồn tại
+    const program = await Program.findById(id);
+    if (!program) {
+      return res.status(404).json({
+        success: false,
+        error: "Program not found",
+      });
+    }
+
+    // Kiểm tra category nếu được cung cấp
+    if (category && !(await Category.findById(category))) {
+      return res.status(404).json({
+        success: false,
+        error: "Category not found",
+      });
+    }
+
+    // Kiểm tra creator nếu được cung cấp
+    if (creator && !(await User.findById(creator))) {
+      return res.status(404).json({
+        success: false,
+        error: "Creator not found",
+      });
+    }
+
+    // Cập nhật các trường cơ bản của chương trình
+    const updateData = {
+      name: name || program.name,
+      description: description || program.description,
+      category_id: category || program.category_id,
+      start_date: start_date || program.start_date,
+      end_date: end_date || program.end_date,
+      status: status || program.status,
+      image: image || program.image,
+      creator: creator || program.creator,
+    };
+
+    // Cập nhật hoặc tạo mới quiz nếu được cung cấp
+    let createdQuiz = null;
+    if (quiz) {
+      // Validate trường duration
+      if (quiz.duration && typeof quiz.duration !== "number") {
+        return res.status(400).json({
+          success: false,
+          error: "Quiz duration must be a number",
+        });
+      }
+
+      // Nếu chương trình đã có quiz, cập nhật
+      if (program.quiz_id) {
+        createdQuiz = await Quiz.findByIdAndUpdate(
+          program.quiz_id,
+          {
+            name: quiz.name || undefined,
+            description: quiz.description || undefined,
+            duration: quiz.duration || undefined,
+          },
+          { new: true }
+        );
+
+        // Cập nhật danh sách câu hỏi nếu có
+        if (quiz.questions?.length > 0) {
+          // Xóa các câu hỏi cũ
+          await Question.deleteMany({ quiz_id: program.quiz_id });
+
+          // Tạo danh sách câu hỏi mới
+          for (const q of quiz.questions) {
+            await Question.create({
+              name: q.name,
+              quiz_id: program.quiz_id,
+              type: q.type || "single",
+              options: q.options,
+            });
+          }
+        }
+      } else {
+        // Tạo quiz mới nếu chưa có
+        createdQuiz = await Quiz.create({
+          name: quiz.name,
+          description: quiz.description,
+          duration: quiz.duration,
+        });
+
+        // Gán quiz_id vào chương trình
+        updateData.quiz_id = createdQuiz._id;
+      }
+    }
+
+    // Cập nhật contents nếu được cung cấp
+    if (contents?.length > 0) {
+      // Xóa contents cũ
+      await Content.deleteMany({ program_id: program._id });
+
+      // Tạo contents mới
+      for (const c of contents) {
+        await Content.create({
+          ...c,
+          program_id: program._id,
+        });
+      }
+    }
+
+    // Cập nhật chương trình
+    const updatedProgram = await Program.findByIdAndUpdate(id, updateData, { new: true });
+
+    // Trả kết quả thành công
+    res.status(200).json({
+      success: true,
+      program: updatedProgram,
+      quiz: createdQuiz || (program.quiz_id ? await Quiz.findById(program.quiz_id) : null),
+      questions: (program.quiz_id ? await Question.find({ quiz_id: program.quiz_id }) : null),
+    });
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    console.error("Update Program Error:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
   }
 };
 // Xóa chương trình (hard delete)
@@ -176,13 +322,13 @@ exports.getProgramById = async (req, res) => {
 exports.getAllProgramsWithCategoryDetails = async (req, res) => {
   try {
     // Lấy tất cả program, populate category
-    const programs = await Program.find().populate("category creator");
+    const programs = await Program.find().populate("category_id creator");
     // Gom nhóm theo category nếu cần
     const grouped = {};
     programs.forEach((p) => {
-      const catId = p.category?._id?.toString() || "uncategorized";
+      const catId = p.category_id?._id?.toString() || "uncategorized";
       if (!grouped[catId])
-        grouped[catId] = { category: p.category, programs: [] };
+        grouped[catId] = { category: p.category_id, programs: [] };
       grouped[catId].programs.push(p);
     });
     res.json({ success: true, data: Object.values(grouped) });
@@ -196,7 +342,7 @@ exports.getCommunityEventPrograms = async (req, res) => {
     // Giả sử có trường isCommunityEvent hoặc type === 'community-event'
     const programs = await Program.find({
       $or: [{ isCommunityEvent: true }, { type: "community-event" }],
-    }).populate("category creator");
+    }).populate("category_id creator");
     res.json({ success: true, data: programs });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -257,12 +403,60 @@ exports.getProgramRecommendationsByAge = async (req, res) => {
 
 exports.getProgramSurveyAnalytics = async (req, res) => {
   try {
-    // Để khung, trả về message mẫu
-    res.json({
-      success: true,
-      message: "Survey analytics endpoint (chưa triển khai logic)",
+    const { programId } = req.params;
+
+    // Validate program ID
+    if (!programId) {
+      return res.status(400).json({ success: false, message: 'Program ID is required' });
+    }
+
+    // Check if program exists
+    const program = await Program.findById(programId);
+    if (!program) {
+      return res.status(404).json({ success: false, message: 'Program not found' });
+    }
+
+    // Fetch surveys for the program
+    const surveys = await Survey.find({ program_id: programId });
+
+    // Fetch response counts for each survey
+    const surveyAnalytics = await Promise.all(
+      surveys.map(async (survey) => {
+        const totalResponses = await SurveyResponse.countDocuments({ survey_id: survey._id });
+        return {
+          id: survey._id.toString(),
+          type: survey.type || 'unknown',
+          total_responses: totalResponses,
+          responses: {}, // Populate with question response data if needed
+          error: null, // Set to error message if applicable
+        };
+      })
+    );
+
+    // Calculate completion statistics
+    const completedParticipants = await SurveyResponse.countDocuments({
+      program_id: programId,
+      completed: true,
     });
+    const incompleteParticipants = await SurveyResponse.countDocuments({
+      program_id: programId,
+      completed: false,
+    });
+
+    // Construct response data
+    const analytics = {
+      surveys: surveyAnalytics,
+      total_surveys: surveys.length,
+      total_responses: surveyAnalytics.reduce((sum, survey) => sum + survey.total_responses, 0),
+      completion_statistics: {
+        completed_participants: completedParticipants,
+        incomplete_participants: incompleteParticipants,
+      },
+    };
+
+    res.json({ success: true, data: analytics });
   } catch (err) {
+    console.error('Error fetching survey analytics:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 };

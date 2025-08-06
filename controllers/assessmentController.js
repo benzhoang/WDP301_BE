@@ -19,7 +19,7 @@ exports.createAssessment = async (req, res) => {
 
 exports.getAllAssessments = async (req, res) => {
   try {
-    const assessments = await Assessment.find().populate("user");
+    const assessments = await Assessment.find().populate("user_id");
     res.json({ success: true, data: assessments });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -125,37 +125,45 @@ exports.takeTestFromUser = async (req, res) => {
     const { score, type, results } = req.body;
     const userId = req.user?.userId || req.body.userId;
 
+    // Validate dữ liệu đầu vào
     if (!results || !Array.isArray(results) || results.length === 0) {
       return res.status(400).json({ success: false, message: "Results array is required and cannot be empty" });
     }
 
-    if (!userId || score === undefined || score === null) {
+    if (!userId || typeof score !== 'number') {
       return res.status(400).json({ success: false, message: "User ID and score are required" });
     }
 
+    // Kiểm tra người dùng
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
-    if (user.role && user.role.toLowerCase() !== "member") {
-      return res.status(400).json({ success: false, message: "Only members can take tests" });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    const actions = await Action.find({ type }).sort({ range: -1 });
-    const action = actions.find(a => a.range <= score);
+    if (user.role?.toLowerCase() !== "member") {
+      return res.status(403).json({ success: false, message: "Only members can take tests" });
+    }
+
+    // Tìm hành động phù hợp với điểm số
+    const actions = await Action.find({ type }).sort({ range: -1 }); // Giảm dần để lấy cái gần nhất
+    const action = actions.find(a => score >= a.range);
     if (!action) {
-      return res.status(404).json({ success: false, message: `No action found for score ${score}` });
+      return res.status(404).json({ success: false, message: `No matching action found for score ${score}` });
     }
 
+    // Tạo dữ liệu kết quả
     const result_json = {
-      score: score,
-      risk_level: action.risk_level || "moderate", // tuỳ bạn setup
-      results: results, // linh động
+      score,
+      risk_level: action.risk_level || "moderate",
+      results,
       recommendations: action.description
     };
 
+    // Lưu vào database
     const assessment = new Assessment({
       user_id: userId,
       action_id: action._id,
-      type: type || "test",
+      type,
       score,
       result_json,
       taken_at: new Date()
@@ -163,7 +171,8 @@ exports.takeTestFromUser = async (req, res) => {
 
     await assessment.save();
 
-    res.status(201).json({
+    // Trả kết quả
+    return res.status(201).json({
       success: true,
       data: {
         assessment_id: assessment._id,
@@ -181,13 +190,15 @@ exports.takeTestFromUser = async (req, res) => {
           risk_level: action.risk_level || "moderate"
         }
       },
-      message: "Test completed and assessment saved successfully"
+      message: "Assessment submitted successfully"
     });
+
   } catch (err) {
     console.error("❌ Error in takeTestFromUser:", err);
-    res.status(500).json({ success: false, error: err.message });
+    return res.status(500).json({ success: false, message: "Internal server error", error: err.message });
   }
 };
+
 
 
 exports.getAssessmentDetails = async (req, res) => {
