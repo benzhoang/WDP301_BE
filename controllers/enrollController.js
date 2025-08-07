@@ -117,7 +117,7 @@ exports.checkMyEnrollment = async (req, res) => {
     if (!enrolls || enrolls.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No enrollment found",
+        message: "Không tìm thấy thông tin đăng ký",
       });
     }
 
@@ -148,20 +148,20 @@ exports.checkMyEnrollment = async (req, res) => {
     }
 
     let allQuestionsCorrect = false;
-    if (program.quizId) {
+    if (program.quiz_id) {
       // Find the quiz using quizId from the Program
-      const quiz = await Quiz.findById(program.quizId);
+      const quiz = await Quiz.findById(program.quiz_id);
       console.log("Quiz:", quiz);
-
+      console.log(quiz)
       if (quiz) {
         const submission = await QuizSubmission.findOne({
           user_id: userId,
           quiz_id: quiz._id,
           course_id: programId, // Assuming course_id refers to programId
         });
-
+        console.log(submission)
         if (submission) {
-          allQuestionsCorrect = submission.answers.every((ans) => ans.is_correct);
+          allQuestionsCorrect = submission.answers.every((ans) => ans.is_correct === true);
         }
       }
     }
@@ -176,9 +176,6 @@ exports.checkMyEnrollment = async (req, res) => {
     res.status(200).json({
       success: true,
       data: enrolls,
-      contentStatus, // Optional: Include content status in response
-      allContentCompleted, // Optional: Include completion status
-      allQuestionsCorrect, // Optional: Include quiz status
       message: "User enrollments retrieved successfully",
     });
   } catch (err) {
@@ -190,6 +187,7 @@ exports.checkMyEnrollment = async (req, res) => {
     });
   }
 };
+
 exports.createEnroll = async (req, res) => {
   try {
     const { program_id } = req.body;
