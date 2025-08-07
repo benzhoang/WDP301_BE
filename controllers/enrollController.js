@@ -1,6 +1,7 @@
 const Enroll = require("../models/enrollModel");
 const Content = require("../models/contentModel");
 const Quiz = require("../models/quizModel")
+const QuizSubmission = require("../models/quizSubmittionModel")
 
 exports.getAllEnrolls = async (req, res) => {
   try {
