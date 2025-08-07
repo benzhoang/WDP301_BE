@@ -97,17 +97,29 @@ exports.submitQuiz = async (req, res) => {
     };
   });
 
-  const submission = await QuizSubmission.create({
-    user_id,
-    quiz_id,
-    course_id: program._id,
-    answers: processedAnswers,
-    score,
-    status: "graded",
-  });
+  // Kiểm tra xem đã có bản nộp nào chưa
+  let submission = await QuizSubmission.findOne({ user_id, quiz_id, course_id: program._id });
 
-  // cập nhật completed_at nếu cần
-  // cập nhật completed_at nếu user đã hoàn thành quiz và content
+  if (submission) {
+    // Cập nhật bản nộp hiện có
+    submission.answers = processedAnswers;
+    submission.score = score;
+    submission.status = "graded";
+    submission.updated_at = new Date();
+    await submission.save();
+  } else {
+    // Tạo bản nộp mới nếu chưa có
+    submission = await QuizSubmission.create({
+      user_id,
+      quiz_id,
+      course_id: program._id,
+      answers: processedAnswers,
+      score,
+      status: "graded",
+    });
+  }
+
+  // Cập nhật completed_at nếu cần
   if (!enroll.completed_at) {
     const allContentIds = contents.map((c) => c._id.toString());
     const completedContentIds = enroll.progress
@@ -126,7 +138,7 @@ exports.submitQuiz = async (req, res) => {
     }
   }
 
-  res.status(201).json(submission);
+  res.status(200).json(submission);
 };
 // GET /api/programs/:programId/quiz
 exports.getQuizByProgramWithoutAnswers = async (req, res) => {
