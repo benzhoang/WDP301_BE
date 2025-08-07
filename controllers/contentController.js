@@ -19,7 +19,7 @@ exports.createContent = async (req, res) => {
 
 exports.getAllContents = async (req, res) => {
   try {
-    const contents = await Content.find().populate("program");
+    const contents = await Content.find().populate("program_id");
     res.json({ success: true, data: contents });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -103,7 +103,7 @@ exports.getContentById = async (req, res) => {
 exports.getContentWithProgram = async (req, res) => {
   try {
     const { id } = req.params;
-    const content = await Content.findById(id).populate('program');
+    const content = await Content.findById(id).populate('program_id');
     if (!content) return res.status(404).json({ success: false, message: 'Content not found' });
     res.json({ success: true, data: content });
   } catch (err) {
@@ -119,7 +119,7 @@ exports.getParsedMetadataContentById = async (req, res) => {
     let metadata = {};
     try {
       metadata = JSON.parse(content.content_metadata_json || '{}');
-    } catch (e) {}
+    } catch (e) { }
     res.json({ success: true, data: { ...content.toObject(), parsedMetadata: metadata } });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
