@@ -106,20 +106,21 @@ exports.checkMyEnrollment = async (req, res) => {
       });
     }
 
-    // Tìm thông tin đăng ký
+    // Find enrollment information
     const enrolls = await Enroll.find({
       user_id: userId,
       program_id: programId,
     });
+    console.log("Enrollments:", enrolls);
 
     if (!enrolls || enrolls.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "Không tìm thấy thông tin đăng ký",
+        message: "No enrollment found",
       });
     }
 
-    // Kiểm tra trạng thái hoàn thành nội dung
+    // Check content completion status
     const contents = await Content.find({ program_id: programId });
     const contentStatus = contents.map((content) => {
       const progress = enrolls[0].progress.find(
@@ -127,31 +128,44 @@ exports.checkMyEnrollment = async (req, res) => {
       );
       return {
         content_id: content._id,
-        title: content.title, // Giả sử Content có trường title
+        title: content.title, // Assuming Content has a title field
         completed: !!progress?.complete,
         completed_at: progress?.completed_at || null,
       };
     });
+    console.log("Content Status:", contentStatus);
 
     const allContentCompleted = contentStatus.every((c) => c.completed);
 
-    // Kiểm tra trạng thái bài kiểm tra
-    const quiz = await Quiz.findOne({ program_id: programId });
-    let allQuestionsCorrect = false;
-
-    if (quiz) {
-      const submission = await QuizSubmission.findOne({
-        user_id: userId,
-        quiz_id: quiz._id,
-        course_id: programId,
+    // Find the program to get the quizId
+    const program = await Program.findById(programId);
+    if (!program) {
+      return res.status(404).json({
+        success: false,
+        message: "Program not found",
       });
+    }
 
-      if (submission) {
-        allQuestionsCorrect = submission.answers.every((ans) => ans.is_correct);
+    let allQuestionsCorrect = false;
+    if (program.quizId) {
+      // Find the quiz using quizId from the Program
+      const quiz = await Quiz.findById(program.quizId);
+      console.log("Quiz:", quiz);
+
+      if (quiz) {
+        const submission = await QuizSubmission.findOne({
+          user_id: userId,
+          quiz_id: quiz._id,
+          course_id: programId, // Assuming course_id refers to programId
+        });
+
+        if (submission) {
+          allQuestionsCorrect = submission.answers.every((ans) => ans.is_correct);
+        }
       }
     }
 
-    // Cập nhật completed_at nếu cần
+    // Update completed_at if necessary
     const enroll = enrolls[0];
     if (enroll.completed_at && (!allContentCompleted || !allQuestionsCorrect)) {
       enroll.completed_at = null;
@@ -161,9 +175,13 @@ exports.checkMyEnrollment = async (req, res) => {
     res.status(200).json({
       success: true,
       data: enrolls,
+      contentStatus, // Optional: Include content status in response
+      allContentCompleted, // Optional: Include completion status
+      allQuestionsCorrect, // Optional: Include quiz status
       message: "User enrollments retrieved successfully",
     });
   } catch (err) {
+    console.error("Error:", err);
     res.status(500).json({
       success: false,
       message: "Failed to retrieve user enrollments",
