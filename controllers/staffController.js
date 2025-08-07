@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const Profile = require('../models/profileModel');
 const Program = require('../models/programModel');
 const Flag = require('../models/flagModel');
+const bcrypt = require('bcryptjs');
 
 exports.getAllStaff = async (req, res) => {
   try {
@@ -28,7 +29,7 @@ exports.createStaff = async (req, res) => {
     if (!['active', 'inactive', 'banned'].includes(status)) return res.status(400).json({ success: false, message: 'Status must be active, inactive, or banned' });
     const existed = await User.findOne({ email });
     if (existed) return res.status(409).json({ success: false, message: 'Email already exists' });
-    const user = new User({ email, password, role, status });
+    const user = new User({ email, password: await bcrypt.hash(password, 10), role, status });
     await user.save();
     let profile = null;
     if (name || bio_json || date_of_birth || job) {
@@ -49,7 +50,7 @@ exports.updateStaff = async (req, res) => {
     if (!user) return res.status(404).json({ success: false, message: 'Staff not found' });
     if (!['admin', 'staff', 'manager'].includes(user.role)) return res.status(400).json({ success: false, message: 'User is not a staff member' });
     if (email !== undefined) user.email = email;
-    if (password !== undefined && password.trim() !== "") user.password = password;
+    if (password !== undefined && password.trim() !== "") user.password = await bcrypt.hash(password, 10);
     if (role !== undefined) {
       if (!['staff', 'manager', 'admin'].includes(role)) return res.status(400).json({ success: false, message: 'Role must be staff, manager, or admin' });
       user.role = role;

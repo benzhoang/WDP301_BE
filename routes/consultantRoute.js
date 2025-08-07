@@ -8,4 +8,5 @@ router.get("/:consultantId", consultantController.getConsultantById);
 router.get("/email/:email", consultantController.getConsultantIdByUserEmail);
 // Thêm các route khác nếu cần
 
+
 module.exports = router; 

@@ -4,6 +4,7 @@ const Assessment = require('../models/assessmentModel');
 const Blog = require('../models/blogModel');
 const BookingSession = require('../models/bookingSessionModel');
 const SurveyResponse = require('../models/surveyResponseModel');
+const bcrypt = require('bcryptjs');
 
 exports.getAllMembers = async (req, res) => {
   try {
@@ -62,7 +63,7 @@ exports.createMember = async (req, res) => {
     if (!['active', 'inactive', 'banned'].includes(status)) return res.status(400).json({ success: false, message: 'Status must be active, inactive, or banned' });
     const existed = await User.findOne({ email });
     if (existed) return res.status(409).json({ success: false, message: 'Email already exists' });
-    const user = new User({ email, password, role: 'member', status });
+    const user = new User({ email, password: await bcrypt.hash(password, 10), role: 'member', status });
     await user.save();
     let profile = null;
     if (name || bio_json || date_of_birth || job) {
@@ -83,7 +84,7 @@ exports.updateMember = async (req, res) => {
     if (!user) return res.status(404).json({ success: false, message: 'Member not found' });
     if (user.role !== 'member') return res.status(400).json({ success: false, message: 'User is not a member' });
     if (email !== undefined) user.email = email;
-    if (password !== undefined) user.password = password;
+    if (password !== undefined) user.password = await bcrypt.hash(password, 10);
     if (status !== undefined) {
       if (!['active', 'inactive', 'banned'].includes(status)) return res.status(400).json({ success: false, message: 'Status must be active, inactive, or banned' });
       user.status = status;
