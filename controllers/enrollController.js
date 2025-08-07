@@ -167,9 +167,13 @@ exports.checkMyEnrollment = async (req, res) => {
     }
 
     // Update completed_at if necessary
+    // Cập nhật completed_at nếu cần
     const enroll = enrolls[0];
-    if (enroll.completed_at && (!allContentCompleted || !allQuestionsCorrect)) {
-      enroll.completed_at = null;
+    if (allContentCompleted && allQuestionsCorrect && !enroll.completed_at) {
+      enroll.completed_at = new Date(); // Đặt thời gian hiện tại
+      await enroll.save();
+    } else if (enroll.completed_at && (!allContentCompleted || !allQuestionsCorrect)) {
+      enroll.completed_at = null; // Xóa nếu chưa hoàn thành hết
       await enroll.save();
     }
 
