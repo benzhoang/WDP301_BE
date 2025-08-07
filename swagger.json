@@ -2645,7 +2645,7 @@
         }
       }
     },
-    "/api/programs/{programId}/result": {
+    "/api/quizzes/programs/{programId}/result": {
       "get": {
         "summary": "Get student result for a program",
         "tags": [
@@ -2691,7 +2691,7 @@
         }
       }
     },
-    "/api/programs/{programId}/result/detailed": {
+    "/api/quizzes/programs/{programId}/result/detailed": {
       "get": {
         "summary": "Get detailed student result for a program",
         "tags": [
