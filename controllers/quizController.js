@@ -249,7 +249,6 @@ exports.getStudentResult = async (req, res) => {
     const completedContents = Array.isArray(enroll.progress)
       ? enroll.progress.filter(p => p.complete).map(p => p.content_id.toString())
       : [];
-
     const totalContents = contents.length;
     const completedCount = completedContents.length;
     const progressPercentage = totalContents > 0 ? Math.round((completedCount / totalContents) * 100) : 0;
@@ -264,18 +263,54 @@ exports.getStudentResult = async (req, res) => {
       });
 
       if (quizSubmission) {
+        // Kiểm tra quiz tồn tại
         const quiz = await Quiz.findById(program.quiz_id);
+        if (!quiz) {
+          return res.status(404).json({
+            success: false,
+            message: "Không tìm thấy bài quiz"
+          });
+        }
+
+        // Lấy danh sách câu hỏi
         const questions = await Question.find({ quiz_id: program.quiz_id });
+        if (questions.length === 0) {
+          return res.status(404).json({
+            success: false,
+            message: "Không tìm thấy câu hỏi nào cho bài quiz này"
+          });
+        }
+
+        // Kiểm tra đồng bộ giữa answers và questions
+        const questionIds = questions.map(q => q._id.toString());
+        const answerQuestionIds = quizSubmission.answers.map(a => a.question_id.toString());
+        const invalidQuestions = answerQuestionIds.filter(id => !questionIds.includes(id));
+        if (invalidQuestions.length > 0) {
+          return res.status(400).json({
+            success: false,
+            message: "Dữ liệu câu trả lời không đồng bộ với câu hỏi trong bài quiz"
+          });
+        }
+
+        // Tính percentage
+        const totalQuestions = questions.length;
+        const score = quizSubmission.score || 0;
+        const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
         quizResult = {
           submission_id: quizSubmission._id,
           submitted_at: quizSubmission.submitted_at,
-          score: quizSubmission.score,
-          total_questions: questions.length,
-          percentage: questions.length > 0 ? Math.round((quizSubmission.score / questions.length) * 100) : 0,
+          score: score,
+          total_questions: totalQuestions,
+          percentage: percentage,
           status: quizSubmission.status,
-          feedback: quizSubmission.feedback
+          feedback: quizSubmission.feedback || null
         };
+
+        // Log để debug
+        console.log("Quiz ID:", program.quiz_id);
+        console.log("Questions:", questions);
+        console.log("Quiz Result:", quizResult);
       }
     }
 
@@ -312,7 +347,6 @@ exports.getStudentResult = async (req, res) => {
     };
 
     res.json(result);
-
   } catch (err) {
     console.error("Error getting student result:", err);
     res.status(500).json({
