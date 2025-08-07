@@ -100,14 +100,62 @@ exports.checkMyEnrollment = async (req, res) => {
         success: false,
         message: "programId is required",
         params: req.params,
-        url: req.url
+        url: req.url,
       });
     }
 
+    // Tìm thông tin đăng ký
     const enrolls = await Enroll.find({
       user_id: userId,
       program_id: programId,
     });
+
+    if (!enrolls || enrolls.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy thông tin đăng ký",
+      });
+    }
+
+    // Kiểm tra trạng thái hoàn thành nội dung
+    const contents = await Content.find({ program_id: programId });
+    const contentStatus = contents.map((content) => {
+      const progress = enrolls[0].progress.find(
+        (p) => p.content_id.toString() === content._id.toString()
+      );
+      return {
+        content_id: content._id,
+        title: content.title, // Giả sử Content có trường title
+        completed: !!progress?.complete,
+        completed_at: progress?.completed_at || null,
+      };
+    });
+
+    const allContentCompleted = contentStatus.every((c) => c.completed);
+
+    // Kiểm tra trạng thái bài kiểm tra
+    const quiz = await Quiz.findOne({ program_id: programId });
+    let allQuestionsCorrect = false;
+
+    if (quiz) {
+      const submission = await QuizSubmission.findOne({
+        user_id: userId,
+        quiz_id: quiz._id,
+        course_id: programId,
+      });
+
+      if (submission) {
+        allQuestionsCorrect = submission.answers.every((ans) => ans.is_correct);
+      }
+    }
+
+    // Cập nhật completed_at nếu cần
+    const enroll = enrolls[0];
+    if (enroll.completed_at && (!allContentCompleted || !allQuestionsCorrect)) {
+      enroll.completed_at = null;
+      await enroll.save();
+    }
+
     res.status(200).json({
       success: true,
       data: enrolls,
@@ -121,7 +169,6 @@ exports.checkMyEnrollment = async (req, res) => {
     });
   }
 };
-
 exports.createEnroll = async (req, res) => {
   try {
     const { program_id } = req.body;
