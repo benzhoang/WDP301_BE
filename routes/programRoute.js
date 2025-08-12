@@ -3,7 +3,7 @@ const router = express.Router();
 const programController = require("../controllers/programController");
 const authenticate = require("../middlewares/authentication");
 
-router.get("/", authenticate, programController.getAllPrograms);
+router.get("/", programController.getAllPrograms);
 router.post("/", authenticate, programController.createProgram);
 router.get("/category/:categoryId", programController.getProgramsByCategory);
 router.get("/creator/:creatorId", authenticate, programController.getProgramsByCreator);

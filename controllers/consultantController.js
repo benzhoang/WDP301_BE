@@ -5,9 +5,9 @@ const ConsultantSlot = require('../models/consultantSlotModel');
 
 exports.getAllConsultants = async (req, res) => {
   try {
-    const consultants = await Consultant.find();
+    const consultants = await Consultant.find().populate('user_id');
     const users = await User.find();
-    const profiles = await Profile.find();
+    const profiles = await Profile.find().populate('user_id');
     const consultantSlots = await ConsultantSlot.find();
 
     const userMap = new Map(users.filter(u => u._id).map(u => [u._id.toString(), u]));
